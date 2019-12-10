@@ -7,4 +7,4 @@ To run the scripts, you need to load images into memory using the read function,
 number, which can be found in the .ann file that accompanies the images. Images can be downloaded from [NAZA's](https://uavsar.asfdaac.alaska.edu/) website in binary format. 
 [Link](https://drive.google.com/open?id=1ahBefq-d6BiN-xZBVYdNdS3PjscoTVPd) to some images used in the experiment. 
 
-Obs: when you download the images, put them in the data folder then set it as your working directory.
+Obs: when you download the data, put them in the PolSAR folder then set it as your working directory.
