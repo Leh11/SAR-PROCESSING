@@ -1,4 +1,5 @@
 \documentclass[a4paper,12pt]{article}
+
 \usepackage[document]{ragged2e}
 \usepackage[portuguese]{babel}
 \usepackage[utf8]{inputenc}
@@ -9,6 +10,7 @@
 \usepackage{multicol}
 \usepackage{multirow}
 \usepackage{graphicx}
+\graphicspath{{./Imagens/}{../image/}}
 \usepackage{times}
 \usepackage{amssymb,amsmath}
 \usepackage[binary-units=true]{siunitx}
@@ -20,7 +22,6 @@
 \usepackage{setspace}
 \usepackage{colortbl}
 \usepackage{units}
-\usepackage{subfigure}
 \usepackage{tikz}
 \usepackage{verbatim}
 \usetikzlibrary{shapes.arrows}
@@ -30,6 +31,7 @@
 \usepackage{helvet}
 \usepackage{indentfirst}
 \usepackage{parskip}
+\usepackage{subcaption}
 
 
 \begin{document}
@@ -142,10 +144,9 @@ A polarimetria de radar, duma forma sucinta trata-se de estudar como as onda de 
 
 Quando se trata duma onda plana, é importante destacar três elementos indispensáveis: a \textit{amplitude} da onda definida pelo modulo do vetor campo eléctrico; a \textit{frequência} da onda que é estabelecida pela velocidade da rotação; e a \textit{polarização} da onda que é determinada pela orientação e a forma geométrica traçada pela extremidade do vetor.
 
-Uma onda eletromagnética pode ser: completamente polarizada, caracterizada por uma periódica monocromática, com uma frequência constante e amplitude estável; despolarizada, quando os componentes do campo eléctrico não mantém a correlação das fases, de forma que a relação fica totalmente imprevisíveis nos intervalos de tempo; ou ainda, apresentar uma característica intermediária entre os dois extremos, caracterizado por um certo grau de polarização \cite{nilosergio2012}.
+Uma onda eletromagnética pode ser: completamente polarizada, caracterizada por uma periódica monocromática, com uma frequência constante e amplitude estável; despolarizada, quando os componentes do campo eléctrico não mantém a correlação das fases, de forma que a relação fica totalmente imprevisíveis nos intervalos de tempo; ou ainda, apresentar uma característica intermediária entre os dois extremos, caracterizado por um certo grau de polarização~\cite{nilosergio2012}.
 
 Qualquer polarização pode ser sintetizada, tanto na emissão, quanto na recepção, através da base linear convencional horizontal (h) e vertical (v), definindo uma boa relação entre eles. Portanto, a importância de estudo de polarimetria se baseia em estudar e analisar sistemas que transmitem e recebem em ambas as polarizações. Como resultado, destacam-se quatro combinações de polarizações possíveis, em transmissão e recepção:
-
 \begin{itemize}
     \item HH – transmissão e recepção horizontal;
     \item VV – transmissão e recepção vertical;
@@ -156,7 +157,6 @@ Qualquer polarização pode ser sintetizada, tanto na emissão, quanto na recep�
 As polarizações HH e VV são consideradas \textit{co-polarized} ou polarização paralela tendo em conta que a transmissão e recepção são as mesmas. Enquanto que HV e VH são consideradas \textit{cross-polarized} ou polarização cruzada, pois a transmissão e recepção são ortogonais entre si.
 
 Dependendo do sistema de radar, podem ser consideras diferentes combinações de polarizações:
-
 \begin{itemize}
     \item Polarização simples – HH ou VV;
     \item Polarização dupla – HH e HV, VV e VH, ou VV e HH;
@@ -367,8 +367,7 @@ A decomposição de Pauli é interpretada de acordo com os quatros coeficientes 
 
 Na decomposição de Krogager, a matriz de espalhamento (S) é expressa em três componentes coerentes, que têm uma interpretação física, em termos da esfera, biplano e espiral\cite{jong:2009}.
 
-A matriz de espalhamento $S$ expressa em base linear (h, v), a decomposição de Krogager apresenta a seguinte formula:
-
+A matriz de espalhamento $S$ expressa em base linear (h, v), a decomposição de Krogager apresenta a seguinte fórmula:
 \begin{multline}
     S_{(h, v)} = e^{j\phi} \{e^{j\phi_s}k_sS_{esfera}+k_dS_{diplano(\theta)}+k_hS_{espiral(\theta)}\} \\
     =e^{j\phi} \Big\{ e^{j\phi_s}k_s \begin{bmatrix}
@@ -524,39 +523,24 @@ Demais aspectos da metodologia incluem as pesquisas literárias que foram realiz
 
 Como já estão apresentadas abordagens na subseção ~\ref{sec:Dec} que permitem decompor as imagem usando diferentes algoritmos e os dados já processados, há necessidade de mostrar como podem ser visualizados e analisados.
 
-A partir da decomposição de Pauli, uma imagem pode ser visualizada utilizando a codificação de cores em RGB. A figura ~\ref{fig:Pauli} mostra uma imagem processada a partir da decomposição de Pauli.
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=4cm, height=10cm]{Pauli.png}
-	\caption{Codificação de cores: $R=|\alpha|^2; G=|\beta|^2; B=|\gamma|^2$}
-	\label{fig:Pauli}
-\end{figure}
+A partir da decomposição de Pauli, uma imagem pode ser visualizada utilizando a codificação de cores em RGB. A figura~\ref{fig:Pauli} mostra uma imagem processada a partir da decomposição de Pauli.
 
 A intensidade total pode obtida pela combinação dos coeficientes:
-
 \begin{equation}
     Span = |S_{HH}|^2+2|S_{HV}|^2+|S_{VV}|=|\alpha|^2+|\beta|^2+|\gamma|^2
 \end{equation}
 
 Como visto na subseção ~\ref{sec:Dec} a decomposição de Krogeger utiliza os coeficientes de espalhamento que estão ligados à uma esfera, um biplano e uma espiral. Dessa abordagem podem ser visualizada as imagens com canais de cores codificados em RGB. A figura ~\ref{fig:Krogager} é uma imagem obtida usando a decomposição de Krogager.
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=4cm, height=10cm]{Krogager.png}
-	\caption{Codificação de cores: $R=|K_{d}|^2; G=|K_{h}|^2; B=|K_{s}|^2$}
-	\label{fig:Krogager}
-\end{figure}
-
-\newpage
-
 A decomposição de Hyunen visualizada em canais de cores RGB, figura ~\ref{fig:Hyunen}.
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=4cm, height=10cm]{Hyunen.png}
-	\caption{Codificação de cores: $R=B_{0T}+B_{T}; G=B_{0T}+B_{T}; B=2A_{0}$}
-	\label{fig:Hyunen}
+\begin{figure}[hbt]
+	\subcaptionbox{Codificação de cores: $R=|\alpha|^2; G=|\beta|^2; B=|\gamma|^2$
+	\label{fig:Pauli}}{\includegraphics[width=.3\linewidth]{Pauli}}
+	\subcaptionbox{Codificação de cores: $R=|K_{d}|^2; G=|K_{h}|^2; B=|K_{s}|^2$\label{fig:Krogager}}{\includegraphics[width=.3\linewidth]{Krogager}}
+	\subcaptionbox{Codificação de cores: $R=B_{0T}+B_{T}; G=B_{0T}+B_{T}; B=2A_{0}$
+	\label{fig:Hyunen}}{\includegraphics[width=.3\linewidth]{Hyunen}}
+\caption{Visualização das decomposições}
 \end{figure}
 
 %=======================================================================================================================================================
