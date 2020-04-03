@@ -23,3 +23,12 @@ kennaugh <- function(hhImg, hvImg, vvImg){
   
 }
 
+A0 = (1/4) * Mod(imagem[,,1] + imagem[,,3])^2
+B0 = (1/4) * Mod(imagem[,,1] - imagem[,,3])^2 + Mod(imagem[,,2])^2
+B = (1/4) * Mod(imagem[,,1] - imagem[,,3])^2 - Mod(imagem[,,2])^2
+C = (1/2) * Mod(imagem[,,1] - imagem[,,3])^2
+D = Im(imagem[,,1] * t(Conj(imagem[,,3])))
+E = Re(t(Conj(imagem[,,2])) * (imagem[,,1] - imagem[,,3]))
+F = Im(t(Conj(imagem[,,2])) * (imagem[,,1] - imagem[,,3]))
+G = Im(t(Conj(imagem[,,2])) * (imagem[,,1] + imagem[,,3]))
+H = Re(t(Conj(imagem[,,2])) * (imagem[,,1] + imagem[,,3]))
