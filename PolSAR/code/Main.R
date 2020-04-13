@@ -1,18 +1,17 @@
 library(png)
 
-ptm <- proc.time()
-    lin <- 10819
-    col <- 3162
+#ptm <- proc.time()
+    lin <- 7779
+    col <- 3300
     
-    ficheiroHH <- file("GrMesa_HH.mlc", "rb")
+    ficheiroHH <- file("Rosamd_HH.mlc", "rb")
     
-    ficheiroHV <- file("GrMesa_HV.mlc", "rb")
+    ficheiroHV <- file("Rosamd_HV.mlc", "rb")
     
-    ficheiroVV <- file("GrMesa_VV.mlc", "rb")
+    ficheiroVV <- file("Rosamd_VV.mlc", "rb")
     
     
     imagemLida <- lerImagem(ficheiroHH, ficheiroHV, ficheiroVV, lin, col)
-proc.time() - ptm
     
     #filtrar <- media(imagemLida)
     
@@ -24,4 +23,5 @@ proc.time() - ptm
     
     #holmes <- holmes(imagemLida)
     writePNG(hyunen, target = "hyunen.png")
+#proc.time() - ptm
     
