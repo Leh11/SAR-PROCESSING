@@ -1,5 +1,5 @@
 # SAR-PROCESSING
-The functions for processing SAR images
+The functions for processing SAR images.
 
 
 These functions allow viewing of large SAR images through decompositions that are separated into scripts.  
