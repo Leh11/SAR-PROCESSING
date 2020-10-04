@@ -12,7 +12,7 @@
 \usepackage{amssymb,amsmath}
 
 \date{}
-\title{RELATÓRIO DE ACOMPANHAMENTO \\ TEOREMAS DE DECOMPOSIÇÕES DOS ALVOS DE RADAR}
+\title{RELATÓRIO DE ACOMPANHAMENTO \\ OS TEOREMAS DE DECOMPOSIÇÕES DOS ALVOS DE RADAR}
 
 \author{Aluno: Ulilé Indeque \\ Orientador: Alejandro C. Frery}
 
@@ -22,23 +22,25 @@
 \section{Introdução} 
 \label{sec:Dec}
 
-As teoremas de decomposições polarimétrica visam fatorar as repostas polarimétricas $(sinal \ retornado)$, que permitem determinar as características, os mecanismos de espalhamento envolvido e, extrair as demais propriedades que constituem a cena iluminada $(alvos)$. Aplicação de tais teoremas providencia melhor interpretação dos alvos e permite determinar os mecanismos de espalhamento dominante.
+Os teoremas de decomposições polarimétrica visam fatorar as repostas polarimétricas $(sinal \ retornado)$, que permitem determinar as características, os mecanismos de espalhamento envolvido e, extrair as demais propriedades que constituem a cena iluminada $(alvos)$. Aplicação de tais teoremas providencia a melhor interpretação dos alvos e permite determinar os mecanismos de espalhamento dominante.
 
-As teoremas de decomposições podem ser classificados em quatro \cite{jong:2009}: 
+Os teoremas de decomposições podem ser classificados em quatro \cite{jong:2009}: 
 
 \begin{itemize}
-    \item As que utilizam \textbf{"decomposições incoerentes"} da matriz de espalhamento $S$, \textbf{(Pauli, Krogager, Cameron, Touzi)}.
+    \item Os que utilizam \textbf{"decomposições incoerentes"} da matriz de espalhamento $S$, \textbf{(Pauli, Krogager, Cameron, Touzi)}.
     
-    \item As baseadas na dicotomia da matriz de Kennaugh $K$, \textbf{(Huynen, Holm-Barnes, Yang)}.
+    \item Os baseados na dicotomia da matriz de Kennaugh $K$, \textbf{(Huynen, Holm-Barnes, Yang)}.
     
-    \item As que usam análise de autovetor ou autovalor da matriz de coerência $T_{3}$ ou de covariância $C_{3}$, \textbf{(Cloude, Holm, van Zyl, Cloude e Pottier)}.
+    \item Os que usam análise de autovetor ou autovalor da matriz de coerência $T_{3}$ ou de covariância $C_{3}$, \textbf{(Cloude, Holm, van Zyl, Cloude e Pottier)}.
     
-    \item As que empregam "modelo-basedo" em decomposição da matriz de coerência $T_{3}$ ou de covariância $C_{3}$, \textbf{(Freeman e Durden, Yamaguchi, Dong)}.
+    \item Os que empregam "modelo-basedo" em decomposição da matriz de coerência $T_{3}$ ou de covariância $C_{3}$, \textbf{(Freeman e Durden, Yamaguchi, Dong)}.
 \end{itemize}
+
+O presente trabalho foi desenvolvido utilizando apenas quatros teoremas de decomposições, nomeadamente: decomposição de Pauli, de  Krogage, de Hyunen e de Barnes-Holme.
 
 \subsection{\textbf{Decomposição de Pauli}}
 
-A base de matriz de Pauli representa os mecanismos espalhamento. A matriz de espalhamento $\textbf{S}$ é expressada como a soma complexa dos espalhadores elementares, associados cada um à uma matriz de pauli \cite{jong:2009}. Segue a formulação:
+A base de matriz de Pauli representa os mecanismos espalhamento. A matriz de espalhamento $\textbf{S}$ é expressa como a soma complexa dos espalhadores elementares, associados cada um à uma matriz de pauli \cite{jong:2009}. Segue a formulação:
 
 \begin{equation}
     S = \begin{bmatrix}
@@ -61,7 +63,7 @@ e
     \lambda &= j \frac{S_{vh} - S_{vh}}{\sqrt{2}}&
 \end{align}
 
-Ao longo do trabalho tem sido considerado somente sistema monostático em que as polarizações $S_{hv}=S_{vh}$ com base no teorema de reciprocidade. Isso reduz a matriz de espalhamento $S$ à três termos:
+Neste trabalho considera-se apenas o sistema monostático em que as polarizações $S_{hv}=S_{vh}$, em consequência do teorema de reciprocidade. Isto permite reduzir a matriz de espalhamento $S$ à três termos:
 
 \begin{equation}
     S = \begin{bmatrix}
@@ -98,9 +100,9 @@ A combinação utilizada para decomposição de Pauli:
 
 \subsection{\textbf{Decomposição de Krogager}}
 
-Na decomposição de Krogager, a matriz de espalhamento $S$ é expressa em três componentes coerentes, que têm uma interpretação física, em termos da esfera, biplano e espiral\cite{jong:2009}.
+Na decomposição de Krogager, a matriz de espalhamento $S$ é expressa em três componentes coerentes, que têm a interpretação física, em termos da esfera, biplano e espiral\cite{jong:2009}.
 
-A matriz de espalhamento $S$ expressa em base linear (h, v), a decomposição de Krogager apresenta a seguinte formula:
+Para matriz de espalhamento $S$ expressa em base linear (h, v), a decomposição de Krogager apresenta a seguinte formula:
 
 \begin{multline}
     S_{(h, v)} = e^{j\phi} \{e^{j\phi_s}k_sS_{esfera}+k_dS_{diplano(\theta)}+k_hS_{espiral(\theta)}\} \\
@@ -147,7 +149,7 @@ Para simplificar, os parâmetros da decomposição de Krogager podem ser derivad
     \phi_{s} &= \phi_{rl}-\frac{1}{2} (\phi_{rr}+\phi_{ll})
 \end{align}
 
-Os elementos $S_{rr}$ e $S_{ll}$ que aparecem na matriz $S$, estão ligados diretamente aos componentes do biplano. De acordo com o tempo, dois casos devem tratado de diferentes formas: quando  $|S_{rr}|$ for maior ou menor que $|S_{ll}|$ \cite{jong:2009}:
+Os elementos $S_{rr}$ e $S_{ll}$ que aparecem na matriz $S$, estão ligados diretamente aos componentes do biplano. Levando em conta o tempo, os dois casos devem tratado de diferentes formas: quando  $|S_{rr}|$ for maior ou menor que $|S_{ll}|$ \cite{jong:2009}:
 
 \begin{align}
     |S_{rr}|\geq|S_{ll}| &\rightarrow
@@ -188,14 +190,14 @@ A combinação final para base da decomposição de Krogager:
 
 \subsection{\textbf{Decomposição de Hyunen}}
 
-De fato, todos os alvos de radar independentemente dos aspetos como: ambiente, a direção do voo da plataforma, a polarização e a forma da onda, são tomados como um objeto. Portanto, todas as informações sobre um determinado alvo podem ser obtidas a partir do conhecimento da matriz de espalhamento $S$, que descreve duma forma geral o processo complexo da interação electromagnética entre o alvo e o campo electromagnético incidente. Porém, para alvos sujeitos as mudanças dinâmicas, diferentemente dos alvos \textit{puros}, há necessidade tirar a média estatística do processo. 
+Todos os alvos de radar na realidade são considerados como um objeto,  independentemente dos aspetos como: ambiente, a direção do voo da plataforma, a frequência do radar, a polarização e as características da onda. Portanto, todas as informações sobre um determinado alvo podem ser obtidas a partir do conhecimento da matriz de espalhamento $S$, que descreve duma forma geral o processo complexo da interação entre o alvo e o campo electromagnético incidente. Porém, para alvos sujeitos as mudanças dinâmicas, diferentemente dos alvos \textit{puros}, há necessidade de calcular a média estatística do processo. 
 
-A ideia por trás dessa decomposição é de fatorar o conjunto dos dados em duas partes: uma que seria identifica como um alvo único $"alvos \ puros"$ e o resto chamado \textbf{N-alvos} $"alvos \ distribuidos"$ \cite{jong:2009}. Diz-se que essa abordagem segue a ideia de identificar um objeto num ambiente dinâmico. 
+A ideia por trás dessa decomposição é de fatorar o conjunto dos dados em duas partes: uma que seria identifica como um alvo único $"alvos \ puros"$ e o resto chamado \textbf{N-alvos} $"alvos \ distribuidos"$ \cite{jong:2009}. 
 
-Esta propriedade foi mencionada pela primeira vez no trabalho de Chandrasekhar e teve como objetivo, fatorar a onda parcialmente polarizada em função de duas componentes:
+Essa propriedade foi mencionada pela primeira vez no trabalho de Chandrasekhar e teve como objetivo, fatorar a onda parcialmente polarizada em função de duas componentes:
 totalmente polarizada e totalmente despolarizada.
 
-Nessa decomposição pode ser formulada uma matriz de coerência a partir dos parâmetros da matriz de Kennaugh, em representação dos alvos distribuidos, tirando a sua média. Segue a formulação:
+A partir desse teorema pode-se formular uma matriz de coerência, utilizando os parâmetros da matriz de Kennaugh, em representação dos alvos distribuidos e calculando a sua média. Segue a formulação:
 
 \begin{equation}
     \begin{bmatrix}
@@ -205,7 +207,7 @@ Nessa decomposição pode ser formulada uma matriz de coerência a partir dos pa
     \end{bmatrix}
 \end{equation}
 
-A matriz de coerência media acima apresenta, perde a relação de dependência, enquanto um único objeto fixado é dado pelos cinco parâmetros \cite{jong:2009}. Com essa abordagem, percebe-se que a média dos alvos não pode ser representado por um único objeto equivalente, deixando quatro parâmetros de fora. Como a matriz de coerência média resulta numa média incoerente, é possível obter uma decomposição média de único alvo $T_{0}$ (dado os cinco parâmetros) e os alvos restantes ou $T_{N}$ \textit{N-alvos} usando os quatro parâmetros. Ambos os alvos são independentes, completamente especificados e fisicamente realizáveis \cite{jong:2009}. Os restantes alvos são escolhidos para representar parâmetros não simétricos. Por isso, os \textit{N-alvos} não mudam com a inclinação do ângulo \cite{jong:2009}, respeitando uma das propriedades desse teorema, em que os \textit{N-alvos} são invariantes. Um único alvo puro pode ser representado por uma matriz de Kennaugh ou matriz de coerência apresentado acima com os quatro parâmetros dependentes da relação $B^2_{0}=B^2_{0}+E^2+F^2$ \cite{jong:2009}. Para mais informação, consultar \cite{jong:2009} subseção [$6.2.1$].
+A matriz de coerência média acima apresentada, perde a relação de dependência, enquanto um único objeto fixado é dado pelos cincos parâmetros \cite{jong:2009}. Com essa abordagem, percebe-se que a média dos alvos não pode ser representado por um único objeto equivalente, deixando os quatros parâmetros de fora. Como a matriz de coerência média resulta numa média incoerente, é possível obter uma decomposição média de \textit{alvos únicos}  $T_{0}$ (os cincos parâmetros) e os alvos restantes ou $T_{N}$ \textit{N-alvos} (os quatros parâmetros). Ambos os alvos são independentes, completamente especificados e fisicamente realizáveis \cite{jong:2009}. Os restantes alvos são escolhidos para representar parâmetros não simétricos. Por isso, os \textit{N-alvos} não mudam com a inclinação do ângulo \cite{jong:2009}, respeitando uma das propriedades desse teorema, em que os \textit{N-alvos} são invariantes. Um único alvo puro pode ser representado por uma matriz de Kennaugh ou matriz de coerência apresentada acima, com os quatros parâmetros dependentes da relação $B^2_{0}=B^2_{0}+E^2+F^2$ \cite{jong:2009}. Para mais informação, consultar \cite{jong:2009} subseção [$6.2.1$].
 
 A ideia do Hyunen foi decompor $(B_{0}, B, E, F)$ em dois vetores correspondentes à um "único alvo equivalente" e o resto dos alvos \textit{N-alvos}. Segue a formulação:
 
@@ -216,7 +218,7 @@ A ideia do Hyunen foi decompor $(B_{0}, B, E, F)$ em dois vetores correspondente
     \end{split}
 \end{equation}
 
-A relação apresentada demostra de forma explicita que os \textit{N-alvos}  correspondem justamente os alvos não simétricos, pois são definidos exclusivamente pelos parâmetros ($B_{0N}, B_{N}, E_{N}, F_{N}$). Os alvos únicos reconstruidos a partir da equação abaixo, são representados pelos parâmetros ($B_{0T}, B_{T}, E_{T}, F_{T}$), enquanto os parâmetros ($A_{0} , C, H, G$) são fixados.
+A relação apresentada demostra de forma explícita que os \textit{N-alvos}  correspondem justamente os alvos não simétricos, pois são definidos exclusivamente pelos parâmetros ($B_{0N}, B_{N}, E_{N}, F_{N}$). Os alvos únicos reconstruidos a partir da equação abaixo, são representados pelos parâmetros ($B_{0T}, B_{T}, E_{T}, F_{T}$), enquanto os parâmetros ($A_{0} , C, H, G$) são fixados.
 
 \begin{equation}
     \begin{split}
@@ -225,7 +227,7 @@ A relação apresentada demostra de forma explicita que os \textit{N-alvos}  cor
     \end{split}
 \end{equation}
 
-Respeitando o princípio de que $T_{0}$ deve ser uma matriz de coerência de classificação \textit{um}, segue \cite{jong:2009}:
+Respeitando o princípio de que $T_{0}$ deve ser uma matriz de coerência de classificação $1$, segue \cite{jong:2009}:
 
 \begin{equation}
     T_{3} = T_{0} + T_{N}
@@ -267,9 +269,9 @@ A expressão final para decomposição de Hyunem:
 
 \subsection{\textbf{Decomposição de Barnes-Holme}}
 
-Partindo do pre-suposto de que a decomposição de \textbf{Hyunen} fatoriza a resposta polarimétrica \textit{Matriz de Coerência} em \textit{$T_{0}$ - alvos puros} contendo cinco parâmetros \textit{$rank - 1$} e, \textit{$T_{N}$ - em alvos distribuídos} com resto dos parâmetros \textit{$rank - 1$} que é dado como independente \textit{"roll invariant"} ao ângulo de aquisição. Assim sendo, é plausível a interpretação de que o espaço vetorial gerado pela \textit{$T_{0}$} deve ser ortogonal ao espaço gerado pela \textit{$T_{0}$}. Para satisfazer estas condições, introduziu-se pelo \textbf{Barnes-Holm} um vetor $q$ que ao multiplica-lo  pela $T_{N}$ gera um vetor nulo; ou seja $T_{N}q = 0$. Com isso, permanece a ideia da ortogonalidade e a invariabilidade em relação ao ângulo, independentemente da rotação da polarização. Segue a normalização e a composição da equações:
+Partindo do pre-suposto de que a decomposição de \textbf{Hyunen} fatoriza a \textit{Matriz de Coerência - $T_{3}$}, classificados em alvos puros \textit{$T_{0}$} que contem os cincos parâmetros e, em alvos distribuídos \textit{$T_{N}$} com resto dos parâmetros que são dados como independentes \textit{"roll invariant"} ao ângulo de aquisição. Sendo assim, é plausível a interpretação de que o espaço vetorial gerado pela \textit{$T_{0}$} deve ser ortogonal ao espaço gerado pela \textit{$T_{N}$}. Para satisfazer estas condições, introduziu-se pelos \textbf{Barnes-Holm} um vetor $q$ que ao multiplica-lo  pela $T_{N}$ gera um vetor nulo; ou seja $T_{N}q = 0$. Com isso, permanece a ideia da ortogonalidade e a invariabilidade em relação ao ângulo, independentemente da rotação. Segue a normalização e a composição da equações:
 
-Dada a matriz $U$, definida pelo
+Dada a matriz $U$, definida como
 
     \begin{equation}
         U = \begin{bmatrix}
@@ -278,7 +280,7 @@ Dada a matriz $U$, definida pelo
             0 & -\sin{2\theta} & \cos{2\theta}
         \end{bmatrix}
     \end{equation} 
-Obtém-se o vetor $q$ como sendo o autovetor de $U$, decomposto em que $q_{1}, q_{2} \ e \ q_{3}$ em que
+Obtém-se o vetor $q$ como sendo o autovetor de $U$, decomposto em que $q_{1}, \  q_{2} \ e \ q_{3}$ em que
 
     \begin{equation}
         q_{1} =\begin{bmatrix}
@@ -298,13 +300,13 @@ Obtém-se o vetor $q$ como sendo o autovetor de $U$, decomposto em que $q_{1}, q
         \end{bmatrix}
     \end{equation}
     
-Como proposto pelo \textbf{Hyunen}, a matriz de coerência $T_{3}$ pode ser decomposto em \textit{alvos puros} e \textit{alvos distribuidos} de três formas diferentes, usando os três autovetores acima citadas, propostos pelo \textbf{Barnes-Holm}. 
-Tomando cada autovetor, pode-se normalizar um vetores como segue:
+Como proposto pelo \textbf{Hyunen}, a matriz de coerência $T_{3}$ pode ser decomposto em \textit{alvos puros} e \textit{alvos distribuidos} de três formas diferentes, usando os três autovetores acima citadas, propostos pelos \textbf{Barnes-Holm}. 
+Tomando cada autovetor, pode-se normalizar os vetores como segue:
 
 \begin{equation}
-    k_{01} = \frac{T_{3}q_{1}}{\sqrt{q_{1}^{T*}T_{3}q_{1}}} \    
-    k_{02} = \frac{T_{3}q_{2}}{\sqrt{q_{2}^{T*}T_{3}q_{2}}} \    
-    k_{03} = \frac{T_{3}q_{3}}{\sqrt{q_{3}^{T*}T_{3}q_{3}}} \ 
+    k_{01} = \frac{T_{3}q_{1}}{\sqrt{q_{1}^{T*}T_{3}q_{1}}}; \    
+    k_{02} = \frac{T_{3}q_{2}}{\sqrt{q_{2}^{T*}T_{3}q_{2}}}; \    
+    k_{03} = \frac{T_{3}q_{3}}{\sqrt{q_{3}^{T*}T_{3}q_{3}}}; \ 
 \end{equation}
 
 O primeiro vetor corresponde exatamente a formulação feita pelo \textbf{Hyunen}, o que permite considerar somente os dois últimos neste teorema \cite{jong:2009}.
@@ -327,7 +329,7 @@ A expressão final para decomposição de Banrnes-Holmes:
 \end{equation}
 
 \section{\textbf{Resultados}}
-Os dados usados neste trabalho foram obtidos a partir da site da \textit{"NASA"}, no formato binário. Para implementação dos algoritmos e geração das imagens, foi usado a linguagem R. As imagens representam os mecanismos de espalhamento que expressam a energias presente em cada componente associado aos pixeis.
+Os dados usados neste trabalho foram obtidos a partir da site da \textit{"NASA"}, no formato binário. Para implementação dos algoritmos e geração das imagens, foi usado a linguagem R. As imagens representam os mecanismos de espalhamento que expressam as energias presente em cada componente associado aos pixeis.
 
 \subsection{\textbf{Pauli}}
 
@@ -453,3 +455,4 @@ Os dados usados neste trabalho foram obtidos a partir da site da \textit{"NASA"}
 \bibliographystyle{unsrt}
 \bibliography{ref}
 \end{document}
+
