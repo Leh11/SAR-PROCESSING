@@ -22,3 +22,21 @@ O presente trabalho destina-se a obtenção das medidas de distância entre duas
     
 **4 - Aplicação de métrica**  
     R: usamos Kullback-Leibler para obter similaridade entre P e Q. Passo em análise!!!??? 
+    
+```{r}
+require(colorspace)
+require(GGally)
+
+# Perfect image in the RGB space
+N <- 100000 # number of samples over each R, G, B channel
+r <- runif(N)
+g <- runif(N)
+b <- runif(N)
+
+PerfectImageCIE <- ConverteRGBaCIE(r, g,b) # especificar a função; o resultado tem três canais
+
+ggpairs(PerfectImageCIE) # gráfico de pares
+
+```
+    
+    
