@@ -33,6 +33,7 @@ r <- runif(N)
 g <- runif(N)
 b <- runif(N)
 
+convertColorSpace(rgb, to = "Lab", sample.size = N, to.ref.white = "D65")
 PerfectImageCIE <- ConverteRGBaCIE(r, g,b) # especificar a função; o resultado tem três canais
 
 ggpairs(PerfectImageCIE) # gráfico de pares
