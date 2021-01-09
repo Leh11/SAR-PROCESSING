@@ -1,9 +1,14 @@
+require(ggplot2)
 require("colordistance")
 require("colorspace")
 require("GGally")
+require(ggthemes)
+require(cowplot)
 
 ## N - define o tamanho de amostra usado na construção de matriz de cores, usando espaço RGB. 
-N <- 1000
+N <- 100000
+
+set.seed(1234567890, kind="Mersenne-Twister")
 
 ## arrayRGB - matriz de cores no espaço RGB com N linha e 3 colunas.
 arrayRGB <- matrix(c(runif(N), runif(N), runif(N)),
@@ -29,19 +34,22 @@ dataFLab <- data.frame(arrayLab)
 #      main = "The Correlations between colors", 
 #      lower.panel = list(continuous = wrap("smooth", alpha = 0.7, size=0.3)))
 
-#pairs(arrayLab)
-
 # Em baixo, atravez da ggpairs, pode-se vizualizar os dados, com seguintes
 # caracteristicas: acima do diagonal principal, vê-se os dados em formato
 # da sua densidade, enquanto que abaixo do diagonal, apresenta-se em 
 # formato disperso. Finalmente, por default, o diagonal principal nos mostra
 # a curva dos dados dados.
 
-dataFRGB %>% ggpairs(., lower = list(continuous = wrap("smooth", alpha = 0.5, size=0.3)),
-                     upper = list(continuous = wrap("density", alpha = 0.5, size=0.3)))
-
-
-ggpairs(dataFLab, lower = list(continuous = wrap("smooth", alpha = 0.5, size=0.3)),
-                     upper = list(continuous = wrap("density", alpha = 0.5, size=0.3)))
-
 cor(dataFLab)
+
+names(dataFRGB) <- c("R", "G", "B")
+allpoints <- cbind(dataFRGB, dataFLab)
+
+ggpairs(allpoints, columns = 4:6,
+        upper = list(continuous = wrap("density", size=0.3)),
+        lower = list(continuous = wrap("points", size=0.0001, alpha=.1,
+                                       col=rgb(allpoints$R, allpoints$G, allpoints$B)), 
+                     combo = wrap("dot")
+                     )
+        ) +
+  theme_pander()
