@@ -15,7 +15,7 @@ ideal_mandrill <- loadImage("mandrill.png",
                         lower = NULL, upper = NULL)
 
 
-#show the ideal "pauli" histogram
+#show the ideal image histogram
 plotPixels(ideal_mandrill, color.space = "lab",
            ref.white = "D65", from = "sRGB",
            main = "Pixel on CIElab space - mandrill",
