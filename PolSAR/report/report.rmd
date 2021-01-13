@@ -1,0 +1,109 @@
+---
+title: "Information Content in Color Images"
+author: "Professor Alejando & Ulile"
+date: "13/01/2021"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introdução
+
+As imagens coloridas contêm certas propriedades no espaço de cores CEILab. Tais imagens chamadas de "ideal" quando aplicadas técnicas extatisticas pode-se obter uma natureza de informações conhecidas por "maximum realizable color information" (MRCI).
+
+Basicamente MRCI possui os dados distribuidos uniformemente no espaço CIELab. "A "não conformidade" com MRCI é uma medida de distância entre distribuições de imagens observada e a imagem MRCI".
+
+A hipótese principal do presente trabalho consiste em avaliar qualidade da imagem ideal. Graças a diferentes métricas, pode-se medir distância entre distribuições dos dados duma imagem ideal e uma simulada. Uma das métricas mais utilizadas é a divergência de Kullback-Leibler e, consequentemente será utilizada.
+
+Os autores obtêm uma versão empírica da imagem MRCI com os pontos amostrais distribuidos uniformemente no espaço CIELab $[L^*, a^*, b^*]$ limitado no intervalo $[0,100]\times [−200,200]\times [−200,200]$; os pontos válidos são mapeados no espaço $[R, G, B]$ no intervalo $[0, 1]^3$. Somente pontos válidos no espaço RGB são considerados.
+
+## Etapas  
+   
+O trabalho divide-se em seguintes etapas:   
+`* Selecão e preparação de imagens ideais;`     
+`* Carregar imagens no ambiente;`   
+`* Exploração dos dados;`   
+`* Escolha de tamanho de bins;`   
+`* Escolha de histograma;`   
+`* ...`   
+`* Aplicação de Kullback-Leibler;`   
+``* ...``   
+
+## Aplicação
+
+Para o teste, escolheu-se três imagens, com duas referências que já foram usadas pelos autores. Tais imagens foram carregadas para o ambiente usandos a funcão $loadImage(...)$ do pacote [colordistance]([https://cran.r-project.org/web/packages/colordistance/vignettes/color-spaces.html]).
+
+#### Carregamento
+```{r}
+require("colordistance")
+require("colorspace")
+
+# read the ideal "pauli"
+ideal <- loadImage("pauli.png", 
+                   CIELab = TRUE, sample.size = NULL, ref.white = "D65",
+                   lower = NULL, upper = NULL)
+
+# read the ideal "lena"
+ideal_lena <- loadImage("lena.png", 
+                      CIELab = TRUE, sample.size = NULL, ref.white = "D65",
+                      lower = NULL, upper = NULL)
+
+# read the ideal "mandrill"
+ideal_mandrill <- loadImage("mandrill.png", 
+                        CIELab = TRUE, sample.size = NULL, ref.white = "D65",
+                        lower = NULL, upper = NULL)
+
+ideal_lighthouse <- loadImage("lighthouse.png", 
+                            CIELab = TRUE, sample.size = NULL, ref.white = "D65",
+                            lower = NULL, upper = NULL)
+
+ideal_mount <- loadImage("mount.png", 
+                            CIELab = TRUE, sample.size = NULL, ref.white = "D65",
+                            lower = NULL, upper = NULL)
+```
+
+Para ver a distribuição dos pontos no espaço "Lab", pode-se usar a função $plotPixels(...)$ do mesmo pacote.
+
+#### Visualização dos pontos em CIELab
+```{r echo=FALSE}
+#show the ideal image histogram
+plotPixels(ideal_mandrill, color.space = "lab",
+           ref.white = "D65", from = "sRGB",
+           main = "Pixel on CIElab space - mandrill",
+           xlim = "default",
+           ylim = "default",
+           zlim = "default", 
+           lower = NULL,
+           upper = NULL)
+```
+
+O código em baixo nos mostra o histograma do componente L "Luminância" de cada uma das imagens.
+
+```{r echo=FALSE}
+#getting the histogram of L component in each image
+
+par(mfrow = c(2, 3))
+h.ideal.L <- hist(ideal$filtered.lab.2d$L, 
+                  main = "Histogram of L components of pauli",
+                  xlab = "L component")
+
+h.ideal_lena.L <- hist(ideal_lena$filtered.lab.2d$L,
+                       main = "Histogram of L components of lena",
+                       xlab = "L component")
+
+h.ideal_mandrill.L <- hist(ideal_mandrill$filtered.lab.2d$L, 
+                           main = "Histogram of L components of mandrill", 
+                           xlab = "L component")
+
+h.ideal_lighthouse.L <- hist(ideal_lighthouse$filtered.lab.2d$L, 
+                             main = "Histogram of L components of ideal_lighthouse", 
+                             xlab = "L component")
+
+h.ideal_mount.L <- hist(ideal_mount$filtered.lab.2d$L, 
+                           main = "Histogram of L components of mount", 
+                           xlab = "L component")
+```
