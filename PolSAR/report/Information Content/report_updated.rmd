@@ -81,7 +81,7 @@ plotPixels(ideal_mandrill, color.space = "lab",
            upper = NULL)
 ```
 
-O código em baixo nos mostra o histograma do componente L "Luminância" de cada uma das imagens.
+O grafico em baixo nos mostra o histograma do componente L "Luminância" de cada uma das imagens.
 
 ```{r echo=FALSE}
 #getting the histogram of L component in each image
