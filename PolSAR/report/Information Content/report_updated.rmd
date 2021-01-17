@@ -43,25 +43,25 @@ require("colordistance")
 require("colorspace")
 
 # read the ideal "pauli"
-ideal <- loadImage("/SAR-PROCESSING/PolSAR/image/ideal/pauli.png", 
+ideal <- loadImage("../../image/ideal/pauli.png", 
                    CIELab = TRUE, sample.size = NULL, ref.white = "D65",
                    lower = NULL, upper = NULL)
 
 # read the ideal "lena"
-ideal_lena <- loadImage("/SAR-PROCESSING/PolSAR/image/ideal/lena.png", 
+ideal_lena <- loadImage("../../image/ideal/lena.png", 
                       CIELab = TRUE, sample.size = NULL, ref.white = "D65",
                       lower = NULL, upper = NULL)
 
 # read the ideal "mandrill"
-ideal_mandrill <- loadImage("/SAR-PROCESSING/PolSAR/image/ideal/mandrill.png", 
+ideal_mandrill <- loadImage("../../image/ideal/mandrill.png", 
                         CIELab = TRUE, sample.size = NULL, ref.white = "D65",
                         lower = NULL, upper = NULL)
 
-ideal_lighthouse <- loadImage("/SAR-PROCESSING/PolSAR/image/ideal/lighthouse.png", 
+ideal_lighthouse <- loadImage("../../image/ideal/lighthouse.png", 
                             CIELab = TRUE, sample.size = NULL, ref.white = "D65",
                             lower = NULL, upper = NULL)
 
-ideal_mount <- loadImage("/SAR-PROCESSING/PolSAR/image/ideal/mount.png", 
+ideal_mount <- loadImage("../../image/ideal/mount.png", 
                             CIELab = TRUE, sample.size = NULL, ref.white = "D65",
                             lower = NULL, upper = NULL)
 ```
