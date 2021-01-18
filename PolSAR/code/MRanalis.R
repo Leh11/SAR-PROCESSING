@@ -1,7 +1,7 @@
 require(ggplot2)
-require("colordistance")
-require("colorspace")
-require("GGally")
+require(colordistance)
+require(colorspace)
+require(GGally)
 require(ggthemes)
 require(cowplot)
 

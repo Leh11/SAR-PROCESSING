@@ -1,6 +1,8 @@
 \documentclass[12pt]{article}
 
 \usepackage{natbib}
+\usepackage{amsmath}
+\usepackage{bm,bbm}
 
 \title{Measuring and Enhancing the Visual Content of Polarimetric Synthetic Aperture Radar Decompositions}
 \author{Alejandro C.\ Frery and Ulil\'e Indeque}
@@ -14,8 +16,73 @@ Polarimetric Synthetic Aperture Radar images
 
 \section{Introduction}
 
-\citet{AssessingInformationContentinColorImages} proposed a technique for measuring the information content of color images by measuring a distance between the observed and ideal histograms of the pixel values in the CIELAB color space.
+Polarimetric Synthetic Aperture Radar (PolSAR) images have a prominent role in remote sensing \citep{PolarisationApplicationsRemoteSensing,LeePottier2009PolarimetricRadarImaging}.
+Such images are formed by the return from the scene in several combinations of transmitting and receiving polarization of the electromagnetic waves.
+
+The observation in each pixel of a fully polarimetric image is a $2\times2$ complex-valued matrix:
+\begin{equation}
+\bm S' = \begin{pmatrix}
+	S_{\text{HH}} & S_{\text{HV}}\\
+	S_{\text{VH}} & S_{\text{VV}}
+\end{pmatrix}, \label{Eq:ScatteringMatrix}
+\end{equation}
+in which $S_{ij}$ is a complex value, and $i$ and $j$ are any of the two possible orientations: $\text{H}$ (horizontal) or $\text{V}$ (vertical).
+Under the reciprocity principle, $S_{\text{HV}}=S_{\text{VH}}$, so the information in the scattering matrix~\eqref{Eq:ScatteringMatrix} can be encoded in the scattering vector
+\begin{equation}
+\bm S = \begin{pmatrix}
+	S_{\text{HH}}\\
+	S_{\text{HV}}\\
+	S_{\text{VV}}
+\end{pmatrix}
+\end{equation}
+without loss of information.
+
+More often than not, users employ multilooked images, in which $L$ ideally independent observations are averaged:
+\begin{equation}
+\bm Z = \frac{1}{L} \sum_{\ell=1}^L \bm S(\ell) \bm S^\dag(\ell),
+\end{equation}
+where ``$\dag$'' denotes the transpose of the complex conjugate.
+With this, the multilook observation in each pixel has the form
+\begin{equation}
+\bm Z = \begin{pmatrix}
+I_{\text{HH}} & \text{Cov}(S_{\text{HH}},S_\text{HV}) & \text{Cov}(S_{\text{HH}},S_\text{VV}) \\
+\text{Cov}(S_{\text{HH}},S_\text{HV})^* & I_{\text{HV}} & \text{Cov}(S_{\text{HV}},S_\text{VV})\\
+\text{Cov}(S_{\text{HH}},S_\text{VV})^* & \text{Cov}(S_{\text{HV}},S_\text{VV})^* & I_{\text{VV}}
+\end{pmatrix},
+\label{Eq:Multilook}
+\end{equation}
+in which ``$*$'' denotes the complex conjugate, the diagonal elements are intensities, and the off-diagonal entries are covariances.
+
+It is not possible to visualize directly observations of the form~\eqref{Eq:Multilook}, as they belong to $\mathbbm R_+^3\times \mathbbm C^3$, i.e., they are nine-dimensional objects.
+Such observations encode valuable information from the target, and it is desirable to extract and visualize it.
+Such extraction can be accomplished using Theorem Decompositions.
+
+\subsection{Theorem Decompositions}
+
+PolSAR decomposition consists in retrieving the components which gave rise to each observation.
+The purpose of such operation is to identify the average scattering mechanism within each pixel.
+In the following, we will summarize the main theorems for incoherent observations.
+
+\citet{ModelingandInterpretationofScatteringMechanismsinPolarimetricSyntheticApertureRadarAdvancesandPerspectives2014} discuss the additive general decomposition framework
+\begin{equation}
+\bm Z = \sum_i^N \pi_i \bm Z^{(i)},
+\end{equation}
+in which $\bm Z^{(i)}$ is a prototypical scattering, 
+$\pi_i$ the relative amount with which it contributes to the observation $\bm Z$, and $N$ is the number of components in the resolution cell.
+\citet{APolSARScatteringPowerFactorizationFrameworkandNovelRollInvariantParametersBasedUnsupervisedClassificationSchemeUsingaGeodesicDistanceinpress} discuss a multiplicative rather than additive approach to this problem.
+
+There are several well-known prototypical scatterers, whose form depends on the target.
+Among them, we mention the volume, double bounce, odd bounce, and helix.
+Their coefficient in an observation depends both on the target and on the sensing system conditions.
+
+We are interested in those decomposition theorems that naturally lead to visualization, i.e., that produce three components that can be mapped onto the red, green, and blue channels.
+
+\subsection{Information Content}
+
+\citet{AssessingInformationContentinColorImages} proposed a technique for measuring the information content of color images with the Kullback-Leibler divergence between the observed and ideal histograms of the pixel values in the CIELAB color space.
 This approach also allows improving an image's contrast by maximizing its realizable color information while retaining the chroma and hue.
+
+
 
 
 \section{Methodology}
