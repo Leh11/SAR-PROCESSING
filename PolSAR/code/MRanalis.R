@@ -4,15 +4,18 @@ require("colorspace")
 require("GGally")
 require(ggthemes)
 require(cowplot)
+require(mvmesh)
 
 ## N - define o tamanho de amostra usado na construção de matriz de cores, usando espaço RGB. 
-N <- 100000
+N <- 100
 
 set.seed(1234567890, kind="Mersenne-Twister")
 
 ## arrayRGB - matriz de cores no espaço RGB com N linha e 3 colunas.
-arrayRGB <- matrix(c(runif(N), runif(N), runif(N)),
-                   nrow = N, ncol = 3)
+
+arrayRGB <- matrix(c((1:99)/N, (1:99)/N, (1:99)/N),
+                   nrow = 99, ncol = 3)
+
 dataFRGB = data.frame(arrayRGB)
 
 ## arrayLab - contém a matriz de cores convertida de CIE RGB à Lab usando convertColorSpace().
@@ -50,6 +53,6 @@ ggpairs(allpoints, columns = 4:6,
         lower = list(continuous = wrap("points", size=0.0001, alpha=.1,
                                        col=rgb(allpoints$R, allpoints$G, allpoints$B)), 
                      combo = wrap("dot")
-                     )
-        ) +
+        )
+) +
   theme_pander()
