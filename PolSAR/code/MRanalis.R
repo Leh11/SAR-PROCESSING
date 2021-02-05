@@ -15,12 +15,14 @@ dataMESH <- mesh(seq(0, 0.2, by = 0.01),
                  seq(0, 0.2, by = 0.01),
                  seq(0, 0.2, by = 0.01))
 
+## nessa linha, combina-se todas as subgrades formadas em cada
+## em cada componente, transformando-os em uma matriz 9261x3.
 frameRGB <- cbind(dataMESH$x, dataMESH$y, dataMESH$z)
 
 frameRGB <- data.frame(frameRGB)
 names(frameRGB) <- c("R", "G", "B")
 
-## arrayLab - contém a matriz de cores convertida de CIE RGB à Lab usando convertColorSpace().
+## frameLab - contém a matriz de cores convertida de CIE RGB à Lab usando convertColorSpace().
 ## sample.size = NULL para pegar amostra completa; e referência à luz do dia = "D65".
 
 frameLab <- convertColorSpace(frameRGB, from = "CIE RGB", 
@@ -39,7 +41,7 @@ allpoints <- cbind(frameRGB, frameLab)
 
 ggpairs(allpoints, columns = 4:6,
         upper = list(continuous = wrap("density", size=0.3)),
-        lower = list(continuous = wrap("points", size=0.0001, alpha=.9,
+        lower = list(continuous = wrap("points", size=0.0001, alpha=.5,
                                        col=rgb(allpoints$R, allpoints$G, allpoints$B)), 
                      combo = wrap("dot")
         )
