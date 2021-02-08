@@ -1,18 +1,48 @@
-\documentclass[12pt]{article}
+\documentclass[]{interact}
 
 \usepackage{natbib}
 \usepackage{amsmath}
 \usepackage{bm,bbm}
 
-\title{Measuring and Enhancing the Visual Content of Polarimetric Synthetic Aperture Radar Decompositions}
-\author{Alejandro C.\ Frery and Ulil\'e Indeque}
-\date{}
+\bibpunct[, ]{(}{)}{;}{a}{}{,}% Citation support using natbib.sty
+\renewcommand\bibfont{\fontsize{10}{12}\selectfont}% Bibliography support using natbib.sty
+
+\theoremstyle{plain}% Theorem-like structures provided by amsthm.sty
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\newtheorem{notation}{Notation}
 
 \begin{document}
+\title{Measuring and Enhancing the Visual Content of Polarimetric Synthetic Aperture Radar Decompositions}
+\author{
+	\name{Alejandro C.\ Frery\textsuperscript{a}\thanks{CONTACT A.\ C.\ Frery Email: alejandro.frery@vuw.ac.nz} and
+Ulil\'e Indeque\textsuperscript{b}}
+\affil{\textsuperscript{a}School of Mathematics and Statistics, Victoria University of Wellington, New Zealand; \textsuperscript{b}Laborat\'orio de Computa\c c\~ao Cient\'ifica e An\'alise Num\'erica, Universidade Federal de Alagoas, Brazil}}
+
+\date{}
+
+
 \maketitle
 \begin{abstract}
 Polarimetric Synthetic Aperture Radar images
 \end{abstract}
+
+\begin{keywords}
+Image enhancement;
+Information content;
+Polarimetric decompositions;
+SAR Polarimetry;
+Stochastic distances.
+\end{keywords}
 
 \section{Introduction}
 
@@ -57,25 +87,25 @@ It is not possible to visualize directly observations of the form~\eqref{Eq:Mult
 Such observations encode valuable information from the target, and it is desirable to extract and visualize it.
 Such extraction can be accomplished using Theorem Decompositions.
 
-\subsection{Theorem Decompositions}
+\subsection{Decompositions Theorems}
 
 PolSAR decomposition consists in retrieving the components which gave rise to each observation.
 The purpose of such operation is to identify the average scattering mechanism within each pixel.
 In the following, we will summarize the main theorems for incoherent observations.
 
-\citet{ModelingandInterpretationofScatteringMechanismsinPolarimetricSyntheticApertureRadarAdvancesandPerspectives2014} discuss the additive general decomposition framework
+\citet{ModelingandInterpretationofScatteringMechanismsinPolarimetricSyntheticApertureRadarAdvancesandPerspectives2014} discuss the general additive decomposition framework
 \begin{equation}
 \bm Z = \sum_i^N \pi_i \bm Z^{(i)},
 \end{equation}
 in which $\bm Z^{(i)}$ is a prototypical scattering, 
 $\pi_i$ the relative amount with which it contributes to the observation $\bm Z$, and $N$ is the number of components in the resolution cell.
-\citet{APolSARScatteringPowerFactorizationFrameworkandNovelRollInvariantParametersBasedUnsupervisedClassificationSchemeUsingaGeodesicDistanceinpress} discuss a multiplicative rather than additive approach to this problem.
+Alternatively, \citet{APolSARScatteringPowerFactorizationFrameworkandNovelRollInvariantParametersBasedUnsupervisedClassificationSchemeUsingaGeodesicDistanceinpress} discuss a multiplicative rather than additive approach to this problem.
 
 There are several well-known prototypical scatterers, whose form depends on the target.
 Among them, we mention the volume, double bounce, odd bounce, and helix.
-Their coefficient in an observation depends both on the target and on the sensing system conditions.
+Their coefficients in an observation depends both on the target and on the sensing system conditions.
 
-We are interested in those decomposition theorems that naturally lead to visualization, i.e., that produce three components that can be mapped onto the red, green, and blue channels.
+We are interested in decomposition theorems that naturally lead to visualization, i.e., that produce three components that can be mapped onto the red, green, and blue channels: Barnes-Holmes, Pauli, Krogager, and Hyunen.
 
 \subsection{Information Content}
 
