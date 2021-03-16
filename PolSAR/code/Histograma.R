@@ -12,7 +12,7 @@ require(distrEx)
 
 # read the ideal "pauli"
 
-ideal <- loadImage("../ideal/pauli.png", 
+ideal <- loadImage("../image/ideal/pauli.png", 
                    CIELab = TRUE, sample.size = NULL, ref.white = "D65",
                    lower = NULL, upper = NULL)
 
@@ -26,11 +26,11 @@ all_points <- cbind(frame_LAB, frame_RGB)
 
 # overlying the histogram using ggplot
 ggplot(all_points) +
-      geom_histogram(aes(x = a, fill = "a", alpha = .3),
+      geom_histogram(aes(x = a, y=..density.., fill = "a"), alpha = .3,
                      col = "white", bins = 70) +
-      geom_histogram(aes(x = b, fill = "b", alpha = .3),
+      geom_histogram(aes(x = b, y=..density.., fill = "b"), alpha = .3,
                      col = "white", bins = 70) +
-      geom_histogram(aes(x = L, fill = "L", alpha = .3),
+      geom_histogram(aes(x = L, y=..density.., fill = "L"), alpha = .3,
                      col = "white", bins = 70) 
 
                  
