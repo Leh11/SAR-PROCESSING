@@ -11,7 +11,8 @@ require(distrEx)
 ## ==================================================================
 
 # read the ideal "pauli"
-ideal <- loadImage("pauli.png", 
+
+ideal <- loadImage("../image/ideal/pauli.png", 
                    CIELab = TRUE, sample.size = NULL, ref.white = "D65",
                    lower = NULL, upper = NULL)
 
