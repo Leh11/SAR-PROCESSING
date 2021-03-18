@@ -10,10 +10,12 @@ require(multiApply)
 set.seed(1234567890, kind="Mersenne-Twister")
 
 ## a funcão mesh forma um array-mesh 21x21x21
-                   
-dataMESH <- mesh(seq(0, 0.2, by = 0.01),
-                 seq(0, 0.2, by = 0.01),
-                 seq(0, 0.2, by = 0.01))
+
+  
+dataMESH <- mesh(seq(from=0, to=1, length.out=50),
+                 seq(from=0, to=1, length.out=50),
+                 seq(from=0, to=1, length.out=50)
+                 )
 
 ## nessa linha, combina-se todas as subgrades formadas em cada
 ## em cada componente, transformando-os em uma matriz 9261x3.
@@ -41,9 +43,10 @@ allpoints <- cbind(frameRGB, frameLab)
 
 ggpairs(allpoints, columns = 4:6,
         upper = list(continuous = wrap("density", size=0.3)),
-        lower = list(continuous = wrap("points", size=0.0001, alpha=.5,
+        lower = list(continuous = wrap("points", size=1.5, alpha=.5,
                                        col=rgb(allpoints$R, allpoints$G, allpoints$B)), 
-                     combo = wrap("dot")
+                     combo = wrap("dot"),
+        progress=TRUE             
         )
 ) + theme_pander()
 #===========================================================================================
