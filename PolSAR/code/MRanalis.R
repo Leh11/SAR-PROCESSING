@@ -11,7 +11,6 @@ set.seed(1234567890, kind="Mersenne-Twister")
 
 ## a funcão mesh forma um array-mesh 21x21x21
 
-  
 dataMESH <- mesh(seq(from=0, to=1, length.out=50),
                  seq(from=0, to=1, length.out=50),
                  seq(from=0, to=1, length.out=50)
@@ -27,7 +26,7 @@ names(frameRGB) <- c("R", "G", "B")
 ## frameLab - contém a matriz de cores convertida de CIE RGB à Lab usando convertColorSpace().
 ## sample.size = NULL para pegar amostra completa; e referência à luz do dia = "D65".
 
-frameLab <- convertColorSpace(frameRGB, from = "CIE RGB", 
+arrayLab <- convertColorSpace(frameRGB, from = "CIE RGB", 
                               to = "Lab", from.ref.white = NULL,
                               to.ref.white = "D65", sample.size = NULL)
 
