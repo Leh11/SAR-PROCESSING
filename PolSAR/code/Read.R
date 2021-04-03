@@ -3,7 +3,7 @@ require(colordistance)
 
 # carregamento e tratamento da imagem original
 def_readOrig <- function(){
-  origImage <- loadImage("../../image/ideal/pauli.png", 
+  origImage <- loadImage("../image/ideal/pauli.png", 
                          CIELab = TRUE, sample.size = NULL, ref.white = "D65",
                          lower = NULL, upper = NULL)
   

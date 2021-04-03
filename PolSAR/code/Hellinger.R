@@ -21,7 +21,7 @@ allpoints_ref <- def_ref()
 
 # ===================================================================
 # plotando  ggpairs do espaco Lab original 
-def_ggpairs(allpoints_org)
+#def_ggpairs(allpoints_org)
 
 # plotando histograma sobreposto de original
 def_curva(allpoints_org[,1:3])
@@ -33,16 +33,23 @@ def_ggpairs(allpoints_ref)
 def_curva(allpoints_ref[,1:3])
 
 # ===================================================================
-# funcao computada usando a formula do wiki hellinger
+# funcao 01 computada usando a formula do wiki hellinger
 hellinger_distance01 <- function(p, q){
   return(sqrt(sum((sqrt(p) - sqrt(q))**2))/sqrt(2))
 }
 
+# exemplo da distancia entre componentes L de original e referência!
+
+p <- allpoints_org$L
+q <- allpoints_ref$L
+
 # funcao hellinger do pacote statip para comparacao 
-hellinger(p, q)
+print(hellinger(p, q))
+
+# chamada da funcao 01
+print(hellinger_distance01(p, q))
 
 #c(allpoints_org$L, allpoints_org$a, allpoints_org$b)
 #cut(p, breaks = nclass.FD(p))
 
-hellinger_distance01(p, q)
-hellinger(p, q)
+
