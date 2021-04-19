@@ -16,7 +16,7 @@ def_readOrig <- function(){
   return(all_points)
 }
 
-# criacao de mesh usado como referencia
+# criacao de grade mesh usado como referencia
 def_ref <- function(){
   
   dataMESH <- mesh(seq(from=0, to=1, length.out=50),

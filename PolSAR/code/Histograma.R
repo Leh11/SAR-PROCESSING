@@ -21,17 +21,7 @@ def_ggpairs <- function(all_points){
   return(his)
 }
 
-def_histogram <- function(all_points){
-  h <- getLabHist(origImage, bins = c(179, 453, 523),
-             sample.size = NULL,
-             ref.white = "D65", from = "sRGB",
-             bin.avg = T, as.vec = T,
-             a.bounds = c(-128, 127),
-             b.bounds = c(-128, 127))
-  return(h)
-}
-
-# overlying the histogram using ggplot
+# funcao usada para sobreposicao da curva
 def_curva <- function(all_points){
   ggplot(all_points) +
     geom_density(aes(L, fill = "L"), alpha = .3) +

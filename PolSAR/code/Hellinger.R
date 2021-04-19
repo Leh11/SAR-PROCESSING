@@ -12,14 +12,14 @@ require(statip)
 
 # =========================================================
 # obter a imagem original pela funcao def_readOrig()
-# defina no script Read.
+# definida no script Read.
 allpoints_org <- def_readOrig()
 
 # obter a imagem de refencia pela funcao def_ref() 
-# defina no script Read.
+# definida no script Read.
 allpoints_ref <- def_ref()
 
-# ===================================================================
+# =========================================================
 # plotando  ggpairs do espaco Lab original 
 #def_ggpairs(allpoints_org)
 
@@ -33,23 +33,18 @@ def_ggpairs(allpoints_ref)
 def_curva(allpoints_ref[,1:3])
 
 # ===================================================================
-# funcao 01 computada usando a formula do wiki hellinger
+# funcao que calcula a distancia de hellinger
 hellinger_distance01 <- function(p, q){
   return(sqrt(sum((sqrt(p) - sqrt(q))**2))/sqrt(2))
 }
 
 # exemplo da distancia entre componentes L de original e referência!
-
 p <- allpoints_org$L
 q <- allpoints_ref$L
 
-# funcao hellinger do pacote statip para comparacao 
-print(hellinger(p, q))
+bins <- hist(p, breaks = "FD", plot = F)$breaks
+hp <- hist(p, breaks = "FD", plot = F)$density
+hq <- hist(q, breaks = bins, plot = F)$density
 
-# chamada da funcao 01
-print(hellinger_distance01(p, q))
-
-#c(allpoints_org$L, allpoints_org$a, allpoints_org$b)
-#cut(p, breaks = nclass.FD(p))
-
-
+# chamada da funcao
+hellinger_distance01(hp, hq)
