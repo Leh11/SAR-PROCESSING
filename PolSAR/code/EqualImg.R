@@ -1,4 +1,8 @@
 
+equalImg <- function(img){
+  obj_eq <- ecdf(img)(img)
+  return(obj_eq)
+}
 
 equal <- function(imgRGB){
   
@@ -9,4 +13,5 @@ equal <- function(imgRGB){
   imgRGB[, , 3] <- matrix(ecdf(imgRGB[, , 3])(imgRGB[, , 3]), nrow = nrow(imgRGB[, , 3]), ncol = ncol(imgRGB[, , 3]))
   
   return(imgRGB)
+
 }
