@@ -5,6 +5,10 @@ require(ggthemes)
 require(cowplot)
 require(statip)
 
+source("./Read.R")
+source("./Histograma.R")
+source("./EqualImg.R")
+
 ## ==================================================================
 ## ==                         Hellinger                            ==
 ## ==         dependente de script Read & Histograma!              ==
