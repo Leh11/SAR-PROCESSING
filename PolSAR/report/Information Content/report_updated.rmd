@@ -3,8 +3,8 @@ title: "Information Content in Color Images"
 author: "Professor Alejando & Ulile"
 date: "13/01/2021"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}

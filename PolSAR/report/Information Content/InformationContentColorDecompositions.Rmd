@@ -2,7 +2,9 @@
 title: "Information Content in Color Images"
 author: "Ulilé Indeque and Alejandro C. Frery"
 date: "11/8/2020"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}

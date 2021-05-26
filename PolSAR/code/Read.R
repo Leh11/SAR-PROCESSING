@@ -15,12 +15,6 @@ def_readOrig <- function(){
   
   return(all_points)
 }
-
-# ler imagem usandao png
-read_png <- function(){
-  img <- readPNG("../image/ideal/pauli.png")
-}
-
 # criacao de grade mesh usado como referencia
 def_ref <- function(){
   
@@ -29,9 +23,8 @@ def_ref <- function(){
                    seq(from=0, to=1, length.out=50))
   
   rgb_ref <- data.frame(cbind(dataMESH$x, dataMESH$y, dataMESH$z))
-  #xp
-  #t <- cbind(dataMESH$x, dataMESH$y, dataMESH$z)
-  names(rgb_ref) <- c("R", "G", "B")
+
+    names(rgb_ref) <- c("R", "G", "B")
   
   lab_ref <- convertColorSpace(rgb_ref, from = "CIE RGB", 
                                  to = "Lab", from.ref.white = NULL,
