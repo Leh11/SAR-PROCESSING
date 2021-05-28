@@ -3,8 +3,8 @@ title: "Information Content in Color Images"
 author: "Professor Alejando & Ulile"
 date: "13/01/2021"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -33,7 +33,7 @@ O trabalho divide-se em seguintes etapas:
 `* Aplicação de Kullback-Leibler;`   
 ``* ...``   
 
-## Aplicação
+## Ensaios
 
 Para o teste, escolheu-se três imagens, com duas referências que já foram usadas pelos autores. Tais imagens foram carregadas para o ambiente usandos a funcão $loadImage(...)$ do pacote [colordistance]([https://cran.r-project.org/web/packages/colordistance/vignettes/color-spaces.html]).
 
@@ -83,27 +83,36 @@ plotPixels(ideal_mandrill, color.space = "lab",
 
 O histograma em baixo nos mostra como os dados do componente L "Luminância" estão agrupados em cada uma das imagens.
 
+**Faça novamente a figura abaixo, mostrando lado a lado a imagem e o histograma da sua componente L**
+
+**Conclua esta seção exploratória mostrando a imagem "ideal" e o histograma da sua banda de luminância**
+
 ```{r echo=FALSE}
 #getting the histogram of L component in each image
 
 par(mfrow = c(2, 3))
 h.ideal.L <- hist(ideal$filtered.lab.2d$L, 
-                  main = "Histogram of L components of pauli",
+                  main = "L component of pauli",
                   xlab = "L component")
 
 h.ideal_lena.L <- hist(ideal_lena$filtered.lab.2d$L,
-                       main = "Histogram of L components of lena",
+                       main = "L component of lena",
                        xlab = "L component")
 
 h.ideal_mandrill.L <- hist(ideal_mandrill$filtered.lab.2d$L, 
-                           main = "Histogram of L components of mandrill", 
+                           main = "L component of mandrill", 
                            xlab = "L component")
 
 h.ideal_lighthouse.L <- hist(ideal_lighthouse$filtered.lab.2d$L, 
-                             main = "Histogram of L components of ideal_lighthouse", 
+                             main = "L component of ideal_lighthouse", 
                              xlab = "L component")
 
 h.ideal_mount.L <- hist(ideal_mount$filtered.lab.2d$L, 
-                           main = "Histogram of L components of mount", 
+                           main = "L component of mount", 
                            xlab = "L component")
 ```
+
+# Aplicação
+
+A seguir veremos a aplicação da técnica proposta.
+
