@@ -39,31 +39,14 @@ Para o teste, escolheu-se três imagens, com duas referências que já foram usa
 
 #### Carregamento
 ```{r}
-require("colordistance")
-require("colorspace")
+require(colordistance)
+require(colorspace)
+require(ggplot2)
 
 # read the ideal "pauli"
-ideal <- loadImage("../../image/ideal/pauli.png", 
+img_lena <- loadImage("../../image/original/lena.png", 
                    CIELab = TRUE, sample.size = NULL, ref.white = "D65",
                    lower = NULL, upper = NULL)
-
-# read the ideal "lena"
-ideal_lena <- loadImage("../../image/ideal/lena.png", 
-                      CIELab = TRUE, sample.size = NULL, ref.white = "D65",
-                      lower = NULL, upper = NULL)
-
-# read the ideal "mandrill"
-ideal_mandrill <- loadImage("../../image/ideal/mandrill.png", 
-                        CIELab = TRUE, sample.size = NULL, ref.white = "D65",
-                        lower = NULL, upper = NULL)
-
-ideal_lighthouse <- loadImage("../../image/ideal/lighthouse.png", 
-                            CIELab = TRUE, sample.size = NULL, ref.white = "D65",
-                            lower = NULL, upper = NULL)
-
-ideal_mount <- loadImage("../../image/ideal/mount.png", 
-                            CIELab = TRUE, sample.size = NULL, ref.white = "D65",
-                            lower = NULL, upper = NULL)
 ```
 
 Para ver a distribuição dos pontos no espaço "Lab", pode-se usar a função $plotPixels(...)$ do mesmo pacote.
@@ -71,9 +54,9 @@ Para ver a distribuição dos pontos no espaço "Lab", pode-se usar a função $
 #### Visualização dos pontos em CIELab
 ```{r echo=FALSE}
 #show the ideal image histogram
-plotPixels(ideal_mandrill, color.space = "lab",
+plotPixels(img_lena, color.space = "lab",
            ref.white = "D65", from = "sRGB",
-           main = "Pixel on CIElab space - mandrill",
+           main = "Pixel on CIElab space - lena",
            xlim = "default",
            ylim = "default",
            zlim = "default", 
@@ -90,26 +73,18 @@ O histograma em baixo nos mostra como os dados do componente L "Luminância" est
 ```{r echo=FALSE}
 #getting the histogram of L component in each image
 
-par(mfrow = c(2, 3))
-h.ideal.L <- hist(ideal$filtered.lab.2d$L, 
-                  main = "L component of pauli",
-                  xlab = "L component")
+par(mfrow = c(1, 2))
+allpoints <- data.frame(cbind(img_lena$filtered.lab.2d, img_lena$filtered.rgb.2d))
+#names(allpoints[,3:6]) = c("r", "g", "b")
 
-h.ideal_lena.L <- hist(ideal_lena$filtered.lab.2d$L,
-                       main = "L component of lena",
-                       xlab = "L component")
+plotImage(img_lena)
 
-h.ideal_mandrill.L <- hist(ideal_mandrill$filtered.lab.2d$L, 
-                           main = "L component of mandrill", 
-                           xlab = "L component")
+h.ideal.L <- hist(allpoints$L, breaks = "FD",
+                  main = "L component of lena")
 
-h.ideal_lighthouse.L <- hist(ideal_lighthouse$filtered.lab.2d$L, 
-                             main = "L component of ideal_lighthouse", 
-                             xlab = "L component")
+#ggplot(allpoints) +
+ #geom_density(aes(L, fill = "L"), alpha = .3)
 
-h.ideal_mount.L <- hist(ideal_mount$filtered.lab.2d$L, 
-                           main = "L component of mount", 
-                           xlab = "L component")
 ```
 
 # Aplicação
