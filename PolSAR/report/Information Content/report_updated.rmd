@@ -99,7 +99,7 @@ plotImage(img_lena)
 hist(allpoints$L, breaks = "FD")
 
 # imagem de referência e a sua histograma. Utilizei as dua funcoes
-# plot image para visualizar em dois espacos.
+# plot() & image() para visualizar em dois espacos.
 par(mfrow = c(1, 3))
 plot(lab_ref$L)
 image(matrix(c(lab_ref$L)))
