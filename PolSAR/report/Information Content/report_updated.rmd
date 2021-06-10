@@ -38,15 +38,34 @@ O trabalho divide-se em seguintes etapas:
 Para o teste, escolheu-se três imagens, com duas referências que já foram usadas pelos autores. Tais imagens foram carregadas para o ambiente usandos a funcão $loadImage(...)$ do pacote [colordistance]([https://cran.r-project.org/web/packages/colordistance/vignettes/color-spaces.html]).
 
 #### Carregamento
-```{r}
+```{r echo=FALSE}
 require(colordistance)
 require(colorspace)
 require(ggplot2)
+require(plot3D)
+
 
 # read the ideal "pauli"
 img_lena <- loadImage("../../image/original/lena.png", 
                    CIELab = TRUE, sample.size = NULL, ref.white = "D65",
                    lower = NULL, upper = NULL)
+
+#cria grade no intervalo especificados!
+dataMESH <- mesh(seq(from=0, to=1, length.out=50),
+                 seq(from=0, to=1, length.out=50),
+                 seq(from=0, to=1, length.out=50))
+
+rgb_ref <- data.frame(cbind(dataMESH$x, dataMESH$y, dataMESH$z))
+
+
+names(rgb_ref) <- c("R", "G", "B")
+
+#converte para espaco Lab usando a referência da luz D65.
+lab_ref <- convertColorSpace(rgb_ref, from = "CIE RGB", 
+                             to = "Lab", from.ref.white = NULL,
+                             to.ref.white = "D65", sample.size = NULL)
+
+#allpoints_ref <- cbind(lab_ref, rgb_ref)
 ```
 
 Para ver a distribuição dos pontos no espaço "Lab", pode-se usar a função $plotPixels(...)$ do mesmo pacote.
@@ -73,18 +92,23 @@ O histograma em baixo nos mostra como os dados do componente L "Luminância" est
 ```{r echo=FALSE}
 #getting the histogram of L component in each image
 
-par(mfrow = c(1, 2))
 allpoints <- data.frame(cbind(img_lena$filtered.lab.2d, img_lena$filtered.rgb.2d))
 #names(allpoints[,3:6]) = c("r", "g", "b")
-
+par(mfrow = c(1, 2))
 plotImage(img_lena)
+hist(allpoints$L, breaks = "FD")
 
-h.ideal.L <- hist(allpoints$L, breaks = "FD",
-                  main = "L component of lena")
+# imagem de referência e a sua histograma. Utilizei as dua funcoes
+# plot image para visualizar em dois espacos.
+par(mfrow = c(1, 3))
+plot(lab_ref$L)
+image(matrix(c(lab_ref$L)))
+hist(lab_ref$L, breaks = "FD")
 
-#ggplot(allpoints) +
- #geom_density(aes(L, fill = "L"), alpha = .3)
 
+
+
+#ecdf(allpoints$L)(allpoints$L)
 ```
 
 # Aplicação
