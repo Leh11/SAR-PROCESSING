@@ -57,6 +57,7 @@ dataMESH <- mesh(seq(from=0, to=1, length.out=50),
 
 rgb_ref <- data.frame(cbind(dataMESH$x, dataMESH$y, dataMESH$z))
 
+img_ref <- matrix(c(dataMESH$x, dataMESH$y, dataMESH$z), ncol = 3)
 
 names(rgb_ref) <- c("R", "G", "B")
 
@@ -68,7 +69,7 @@ lab_ref <- convertColorSpace(rgb_ref, from = "CIE RGB",
 #allpoints_ref <- cbind(lab_ref, rgb_ref)
 ```
 
-Para ver a distribuição dos pontos no espaço "Lab", pode-se usar a função $plotPixels(...)$ do mesmo pacote.
+Para ver a distribuição dos pontos no espaço "Lab", pode-se usar a função $plotPixels(...)$ do pacote colordistance.
 
 #### Visualização dos pontos em CIELab
 ```{r echo=FALSE}
@@ -93,22 +94,27 @@ O histograma em baixo nos mostra como os dados do componente L "Luminância" est
 #getting the histogram of L component in each image
 
 allpoints <- data.frame(cbind(img_lena$filtered.lab.2d, img_lena$filtered.rgb.2d))
-#names(allpoints[,3:6]) = c("r", "g", "b")
+
 par(mfrow = c(1, 2))
 plotImage(img_lena)
-hist(allpoints$L, breaks = "FD")
+title("Visualizacão da Lena")
+hist(allpoints$L, breaks = "FD", xlab = "L",
+                                 ylab = "Frequência",
+     main = "Histograma do componente L")
 
-# imagem de referência e a sua histograma. Utilizei as dua funcoes
-# plot() & image() para visualizar em dois espacos.
-par(mfrow = c(1, 3))
-plot(lab_ref$L)
-image(matrix(c(lab_ref$L)))
-hist(lab_ref$L, breaks = "FD")
+# imagem de referência e a sua histograma. 
+# a imagem de referência vista em subgrupos.
+# os componentes da matrix estão nos intervalos x = [-.2, .2], y = (.2, .7), z = (.7, 1.2)
+par(mfrow = c(1, 2))
+image(img_ref, useRaster = TRUE,
+      col = hcl.colors(11, "Spectral"),
+      main = "Imagem de referência")
+
+hist(lab_ref$L, breaks = "FD", xlab = "L",
+                               ylab = "Frequência",
+     main = "Histograma de componente L")
 
 
-
-
-#ecdf(allpoints$L)(allpoints$L)
 ```
 
 # Aplicação
