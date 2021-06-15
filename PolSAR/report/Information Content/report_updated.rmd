@@ -121,3 +121,20 @@ hist(lab_ref$L, breaks = "FD", xlab = "L",
 
 A seguir veremos a aplicação da técnica proposta.
 
+Sejam $O=(r_O, g_O, b_O)$ a imagem original (de Lena, neste exemplo) em formato RGB, e $T(O)=(L_O, a_O, b_O)$ a sua versão transformada para o formato CIELab. 
+A transformação $T$ é 1-a-1, isto é, ela é inversível e temos $T^{-1}$.
+Temos ainda a imagem ideal $I=(L_I,a_I,b_I)$ já em formato CieLab.
+Nosso objetivo é modificar a imagem original de tal forma que o histograma da sua componente $L_O$ seja o mais próximo possível ao histograma dessa mesma componente na imagem ideal $L_I$, digamos $h_{L_I}$.
+Utilizaremos a função empírica de $L_O$, denotada $\widehat{F}_{L_O}$ e a inversa da função empírica de $L_I$, denotada $\widehat{F}_{L_I}^{-1}$.
+
+Faremos essa modificação em duas etapas:
+
+   1. deixar o histograma de $L_O$ uniforme (equalizado); isso será feito aplicando aos dados $L_O$ a sua função empírica: $\widehat{F}_{L_O}(L_O)$.
+   2. aplicar $\widehat{F}_{L_I}^{-1}(\widehat{F}_{L_O}(L_O))$.
+
+Assim, a versão melhorada da imagem original em formato CIELab tem as componentes
+$$
+\big(\widehat{F}_{L_I}^{-1}(\widehat{F}_{L_O}(L_O)), a_O, b_O\big),
+$$
+e a visualizaremos em formato RGB: $T^{-1}\big(\widehat{F}_{L_I}^{-1}(\widehat{F}_{L_O}(L_O)), a_O, b_O\big)$.
+
