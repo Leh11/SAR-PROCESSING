@@ -38,78 +38,59 @@ O trabalho divide-se em seguintes etapas:
 Para o teste, escolheu-se três imagens, com duas referências que já foram usadas pelos autores. Tais imagens foram carregadas para o ambiente usandos a funcão $loadImage(...)$ do pacote [colordistance]([https://cran.r-project.org/web/packages/colordistance/vignettes/color-spaces.html]).
 
 #### Carregamento
-```{r echo=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 require(colordistance)
-require(colorspace)
-require(ggplot2)
 require(plot3D)
-
+require(imager)
+require(HistogramTools)
 
 # read the ideal "pauli"
-img_lena <- loadImage("../../image/original/lena.png", 
-                   CIELab = TRUE, sample.size = NULL, ref.white = "D65",
-                   lower = NULL, upper = NULL)
+lena <- load.image("../../image/original/lena.png")
+
+lpoints <- lena[,,,1]
+
+## convertendo lena para lab
+lab_lena <- RGBtoLab(lena)
 
 #cria grade no intervalo especificados!
 dataMESH <- mesh(seq(from=0, to=1, length.out=50),
                  seq(from=0, to=1, length.out=50),
                  seq(from=0, to=1, length.out=50))
 
-rgb_ref <- data.frame(cbind(dataMESH$x, dataMESH$y, dataMESH$z))
-
-img_ref <- matrix(c(dataMESH$x, dataMESH$y, dataMESH$z), ncol = 3)
-
-names(rgb_ref) <- c("R", "G", "B")
+rgb_ideal <- data.frame(cbind(dataMESH$x, dataMESH$y, dataMESH$z))
 
 #converte para espaco Lab usando a referência da luz D65.
-lab_ref <- convertColorSpace(rgb_ref, from = "CIE RGB", 
+lab_ref <- convertColorSpace(rgb_ideal, from = "CIE RGB", 
                              to = "Lab", from.ref.white = NULL,
                              to.ref.white = "D65", sample.size = NULL)
 
-#allpoints_ref <- cbind(lab_ref, rgb_ref)
 ```
-
-Para ver a distribuição dos pontos no espaço "Lab", pode-se usar a função $plotPixels(...)$ do pacote colordistance.
-
-#### Visualização dos pontos em CIELab
-```{r echo=FALSE}
-#show the ideal image histogram
-plotPixels(img_lena, color.space = "lab",
-           ref.white = "D65", from = "sRGB",
-           main = "Pixel on CIElab space - lena",
-           xlim = "default",
-           ylim = "default",
-           zlim = "default", 
-           lower = NULL,
-           upper = NULL)
-```
-
 O histograma em baixo nos mostra como os dados do componente L "Luminância" estão agrupados em cada uma das imagens.
 
 **Faça novamente a figura abaixo, mostrando lado a lado a imagem e o histograma da sua componente L**
 
 **Conclua esta seção exploratória mostrando a imagem "ideal" e o histograma da sua banda de luminância**
 
-```{r echo=FALSE}
+```{r echo=FALSE, warning=FALSE}
 #getting the histogram of L component in each image
-
-allpoints <- data.frame(cbind(img_lena$filtered.lab.2d, img_lena$filtered.rgb.2d))
-
 par(mfrow = c(1, 2))
-plotImage(img_lena)
+plot(lena)
 title("Visualizacão da Lena")
-hist(allpoints$L, breaks = "FD", xlab = "L",
+hist(lpoints, breaks = "FD", xlab = "L",
                                  ylab = "Frequência",
      main = "Histograma do componente L")
 
-# imagem de referência e a sua histograma. 
-# a imagem de referência vista em subgrupos.
-# os componentes da matrix estão nos intervalos x = [-.2, .2], y = (.2, .7), z = (.7, 1.2)
-par(mfrow = c(1, 2))
-image(img_ref, useRaster = TRUE,
-      col = hcl.colors(11, "Spectral"),
-      main = "Imagem de referência")
+## imagem de referência e a sua histograma. 
+## mudei a função anteriormente usa "image", pois achei 
+## imappend mais relevante e controi a imagem ideal de 
+## de forma mais natural.
 
+iR <- as.cimg(rgb_ideal$X1)
+iG <- as.cimg(rgb_ideal$X2)
+iB <- as.cimg(rgb_ideal$X3)
+par(mfrow = c(1, 2))
+imappend(list(iR, iG, iB), "C") %>% plot
+title("Visualizacão da imagem ideal")
 hist(lab_ref$L, breaks = "FD", xlab = "L",
                                ylab = "Frequência",
      main = "Histograma de componente L")
@@ -138,3 +119,31 @@ $$
 $$
 e a visualizaremos em formato RGB: $T^{-1}\big(\widehat{F}_{L_I}^{-1}(\widehat{F}_{L_O}(L_O)), a_O, b_O\big)$.
 
+## Operações
+```{r echo=FALSE}
+   equalize <- function(imagem) {
+     imagemeq <- ecdf(imagem)(imagem)
+     dim(imagemeq) <- dim(imagem)
+     return(imagemeq)
+   }
+
+   ## equalização de Lab lena
+   lena_eq <- equalize(lab_lena[,,,1])
+
+   ## aplicando a inversão ao componente L
+   hist_mix <- HistToEcdf(hist(lab_ref$L, breaks = "FD", plot = F),
+                     inverse = T)(equalize(lena_eq))
+   
+   ## criar nova image lena com componente L uniformizada e ajustada
+   ## à ter histograma aproximada igual ao componente L de ideal.
+   lena_out <- array(c(hist_mix, lena[,,,2], lena[,,,3]), dim = c(512, 512, 1, 3))
+   
+   ## criando objeto cmig a fim de poder ser manipulador pelo pacote imager.
+   lena_t <- as.cimg(lena_out)
+   
+   par(mfrow = c(1, 3))
+   plot(lena_t)
+   title("Visualizacão da imagem lena final")
+   hist(hist_mix, main = "Histograma mixada em inversão", "FD")
+   hist(lena_eq, main = "Histograma equalizada", "FD")
+```
