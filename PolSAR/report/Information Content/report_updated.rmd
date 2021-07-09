@@ -45,12 +45,12 @@ require(imager)
 require(HistogramTools)
 
 # read the ideal "pauli"
-boat <- load.image("../../image/original/Sailboat.jpeg")
+img_ <- load.image("../../image/original/mandrill.png")
 
-lpoints <- boat[,,,1]
+lpoints <- img_[,,,1]
 
-## convertendo lena para lab
-lab_boat <- RGBtoLab(boat)
+## convertendo original para lab
+lab_img_ <- RGBtoLab(img_)
 
 #cria grade no intervalo especificados!
 dataMESH <- mesh(seq(from=0, to=1, length.out=50),
@@ -74,7 +74,7 @@ O histograma em baixo nos mostra como os dados do componente L "Luminância" est
 ```{r echo=FALSE, warning=FALSE}
 #getting the histogram of L component in each image
 par(mfrow = c(1, 2))
-plot(boat)
+plot(img_)
 title("Visualizacão da Lena")
 hist(lpoints, breaks = "FD", xlab = "L",
                                  ylab = "Frequência",
@@ -88,9 +88,19 @@ hist(lpoints, breaks = "FD", xlab = "L",
 iR <- as.cimg(rgb_ideal$X1)
 iG <- as.cimg(rgb_ideal$X2)
 iB <- as.cimg(rgb_ideal$X3)
-par(mfrow = c(1, 2))
+
+iL <- as.cimg(lab_ref$L)
+ia <- as.cimg(lab_ref$a)
+ib <- as.cimg(lab_ref$b)
+
+
+par(mfrow = c(1, 3))
 imappend(list(iR, iG, iB), "C") %>% plot
-title("Visualizacão da imagem ideal")
+title("Ideal em espço RGB")
+
+imappend(list(iL, ia, ib), "C") %>% plot
+title("Ideal em espço Lab")
+
 hist(lab_ref$L, breaks = "FD", xlab = "L",
                                ylab = "Frequência",
      main = "Histograma de componente L")
@@ -127,23 +137,23 @@ e a visualizaremos em formato RGB: $T^{-1}\big(\widehat{F}_{L_I}^{-1}(\widehat{F
      return(imagemeq)
    }
 
-   ## equalização de Lab lena
-   boat_eq <- equalize(lab_boat[,,,1])
+   ## equalização do componente L de original
+   img_eq <- equalize(lab_img_[,,,1])
 
    ## aplicando a inversão ao componente L
    hist_mix <- HistToEcdf(hist(lab_ref$L, breaks = "FD", plot = F),
-                     inverse = T)(equalize(boat_eq))
+                     inverse = T)(equalize(img_eq))
    
    ## criar nova image lena com componente L uniformizada e ajustada
    ## à ter histograma aproximada igual ao componente L de ideal.
-   boat_out <- array(c(hist_mix, boat[,,,2], boat[,,,3]), dim = c(630, 416, 1, 3))
+   img_out <- array(c(hist_mix, img_[,,,2], img_[,,,3]), dim = c(512, 512, 1, 3))
    
    ## criando objeto cmig a fim de poder ser manipulador pelo pacote imager.
-   boat_f <- as.cimg(boat_out)
+   img_final <- as.cimg(img_out)
    
    par(mfrow = c(1, 3))
-   plot(boat_f)
+   plot(img_final)
    title("Visualizacão da imagem lena final")
    hist(hist_mix, main = "Histograma mixada em inversão", "FD")
-   hist(boat_eq, main = "Histograma equalizada", "FD")
+   hist(img_eq, main = "Histograma equalizada", "FD")
 ```
