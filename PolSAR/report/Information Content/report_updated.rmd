@@ -42,28 +42,28 @@ Para o teste, escolheu-se três imagens, com duas referências que já foram usa
 require(colordistance)
 require(plot3D)
 require(imager)
-require(HistogramTools)
 
-# carregamento de imagem original
+# carregar de imagem original
 originalRGB <- load.image("../../image/original/mandrill.png")
 
-## conversão de original para espaço lab
+## converter de original para espaço lab
 originalLab <- RGBtoLab(originalRGB)
 
-#cria grade no intervalo especificados!
+#criar grade no intervalo especificados!
 dataMESH <- mesh(seq(from=0, to=1, length.out=50),
                  seq(from=0, to=1, length.out=50),
                  seq(from=0, to=1, length.out=50))
 
 idealRGB <- data.frame(cbind(dataMESH$x, dataMESH$y, dataMESH$z))
 
-#conversão de ideal para espaco Lab usando a referência da luz D65.
+#converter de ideal para espaco Lab usando a referência da luz D65.
 idealLab <- convertColorSpace(idealRGB, from = "CIE RGB", 
                              to = "Lab", from.ref.white = NULL,
                              to.ref.white = "D65", sample.size = NULL)
 
    ## componente L de original
    L_O <- originalLab[,,,1]
+   
    ## componente L de ideal
    L_I <- idealLab$L
 
@@ -75,32 +75,32 @@ O histograma em baixo nos mostra como os dados do componente L "Luminância" est
 **Conclua esta seção exploratória mostrando a imagem "ideal" e o histograma da sua banda de luminância**
 
 ```{r echo=FALSE, warning=FALSE}
-## visualização de imagem original em RGB e Lab, e sua histograma
+## visualizar imagem original em RGB e Lab, e sua histograma
 par(mfrow = c(1, 3))
 
-## visualização de original em RGB
+## visualizar original em RGB
 plot(originalRGB)
-title("Visualização da mandrill-RGB")
+title("Mandrill em espaço RGB")
 
-## visualização de original em Lab
+## visualizar original em Lab
 plot(originalLab)
-title("Visualização da mandrill-Lab")
+title("Mandrill em espaço Lab")
 
-## visualização de histograma do componente L de original
+## visualizar histograma do componente L de original
 hist(L_O, breaks = "FD", xlab = "L",
                                  ylab = "Frequência",
      main = "Componente L de mandrill")
 
 
-## visualização da imagem ideal em RGB e Lab, e a sua histograma. 
+# visualizar a imagem ideal em RGB e Lab, e a sua histograma. 
 
-## tansformação dos componentes do ideal
+## tansformar os componentes do ideal
 ## em objetos cmig para plotagem em RGB
 iR <- as.cimg(idealRGB$X1)
 iG <- as.cimg(idealRGB$X2)
 iB <- as.cimg(idealRGB$X3)
 
-## transformação dos componentes do ideal em
+## transformar os componentes do ideal em
 ## objetos cmig para plotagem em Lab
 iL <- as.cimg(idealLab$L)
 ia <- as.cimg(idealLab$a)
@@ -108,20 +108,18 @@ ib <- as.cimg(idealLab$b)
 
 
 par(mfrow = c(1, 3))
-## visualização de ideal em RGB
+## visualizar ideal em RGB
 imappend(list(iR, iG, iB), "C") %>% plot
 title("Ideal em espço RGB")
 
-## visualização de ideal em Lab
+## visualizar ideal em Lab
 imappend(list(iL, ia, ib), "C") %>% plot
 title("Ideal em espço Lab")
 
-## visualização de histograma do componente L de ideal
+## visualizar histograma do componente L de ideal
 hist(L_I, breaks = "FD", xlab = "L",
                                ylab = "Frequência",
      main = "Componente L do ideal")
-
-
 ```
 
 # Aplicação
@@ -147,16 +145,16 @@ e a visualizaremos em formato RGB: $T^{-1}\big(\widehat{F}_{L_I}^{-1}(\widehat{F
 
 ## Operações
 ```{r echo=FALSE}
-   equalize <- function(imagem) {
-     imagemeq <- ecdf(imagem)(imagem)
-     dim(imagemeq) <- dim(imagem)
-     return(imagemeq)
-   }
+   source("../../code/imagematrix.R")
 
-   ## equalização do componente L de originalLab
+   ## equalizar componente L de originalLab
    L_eq <- equalize(L_O)
 
-   ## forçando histograma de componente L de originalLab à 
+   ## testei esta função, porém o histograma resultante
+   ## não se aproximou do componente L do ideal como esperado.
+   #l_h <- HistogramMatching(cp_Li, L_eq)
+   
+   ## forçar histograma de componente L de originalLab à 
    ## ficar igual ao componente L de idealLab
    L_H <- HistToEcdf(hist(L_I, breaks = "FD", plot = F),
                      inverse = T)(equalize(L_eq))
@@ -164,17 +162,17 @@ e a visualizaremos em formato RGB: $T^{-1}\big(\widehat{F}_{L_I}^{-1}(\widehat{F
    ## cópia
    nova_originalLab <- originalLab
    
-   ## subtituição do componente L da nova imagem para L_H
+   ## substituir componente L da nova imagem para L_H
    nova_originalLab[,,,1] <- L_H
-  
+   
    par(mfrow = c(1, 3))
-   ## visualização de nova imagem
+   ## visualizar nova imagem
    plot(nova_originalLab)
    title("Nova imagem mandrill")
    
    ## histograma L_H
    hist(L_H, main = "Histograma L forçada", "FD")
-   
+
    ## histograma equalizada
    hist(L_eq, main = "Histograma L do originalLab equalizada", "FD")
 ```
