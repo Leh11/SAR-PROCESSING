@@ -44,10 +44,12 @@ require(plot3D)
 require(imager)
 
 # carregar de imagem original
-originalRGB <- load.image("../../image/original/mandrill.png")
+originalRGB_pauli <- load.image("../../image/original/pauli.png")
+originalRGB_lena <- load.image("../../image/original/lena.png")
 
-## converter de original para espaço lab
-originalLab <- RGBtoLab(originalRGB)
+## converter imagem original de RGB para espaço lab
+originalLab_pauli <- RGBtoLab(originalRGB_pauli)
+originalLab_lena <- RGBtoLab(originalRGB_lena)
 
 #criar grade no intervalo especificados!
 dataMESH <- mesh(seq(from=0, to=1, length.out=50),
@@ -56,16 +58,17 @@ dataMESH <- mesh(seq(from=0, to=1, length.out=50),
 
 idealRGB <- data.frame(cbind(dataMESH$x, dataMESH$y, dataMESH$z))
 
-#converter de ideal para espaco Lab usando a referência da luz D65.
+#converter imagem ideal de RGB para espaco Lab usando a referência da luz D65.
 idealLab <- convertColorSpace(idealRGB, from = "CIE RGB", 
                              to = "Lab", from.ref.white = NULL,
                              to.ref.white = "D65", sample.size = NULL)
-idealLab <- idealLab
 
-## componente L de original
-L_O <- originalLab[,,,1]
 
-## componente L de ideal
+## obter componente L de original
+L_pauli <- originalLab_pauli[,,,1]
+L_lena <- originalLab_lena[,,,1]
+
+## obter componente L de ideal
 L_I <- idealLab$L
 
 ```
@@ -76,17 +79,29 @@ O histograma em baixo nos mostra como os dados do componente L "Luminância" est
 **Conclua esta seção exploratória mostrando a imagem "ideal" e o histograma da sua banda de luminância**
 
 ```{r echo=FALSE, warning=FALSE}
-## visualizar imagem original em RGB e Lab, e sua histograma
+## visualizar imagem original e sua histograma
 par(mfrow = c(1, 2))
 
-## visualizar original em RGB
-plot(originalRGB, axes = F)
-title("Mandrill em espaço RGB")
+## visualizar original-pauli em RGB
+plot(originalRGB_pauli, axes = F)
+title("Pauli em espaço RGB")
 
-## visualizar histograma do componente L de original
-hist(L_O, breaks = "FD", xlab = "L",
+## visualizar histograma do componente L-pauli original
+hist(L_pauli, breaks = "FD", xlab = "L",
                                  ylab = "Frequência",
-     main = "Componente L de mandrill")
+     main = "Componente L-pauli")
+## =================================================
+
+par(mfrow = c(1, 2))
+
+## visualizar original-lena em RGB
+plot(originalRGB_lena, axes = F)
+title("Lena em espaço RGB")
+
+## visualizar histograma do componente L-lena original
+hist(L_lena, breaks = "FD", xlab = "L",
+                                 ylab = "Frequência",
+     main = "Componente L-lena")
 
 ## tansformar os componentes do ideal
 ## em objetos cmig para plotagem em RGB
@@ -131,31 +146,67 @@ e a visualizaremos em formato RGB: $T^{-1}\big(\widehat{F}_{L_I}^{-1}(\widehat{F
    source("../../code/imagematrix.R")
 
    ## equalizar componente L de originalLab
-   L_eq <- equalize(L_O)
+   ## L_pauli_eq <- equalize(L_pauli)
+   ## L_lena_eq <- equalize(L_lena)
 
-   ## testei esta função, porém o histograma resultante
-   ## não se aproximou do componente L do ideal como esperado.
-   #l_h <- HistogramMatching(cp_Li, L_eq)
-   
    ## forçar histograma de componente L de originalLab à 
    ## ficar igual ao componente L de idealLab
-   L_H <- HistToEcdf(hist(L_I, breaks = "FD", plot = F),
-                     inverse = T)(equalize(L_eq))
+   L_pauli_H <- HistToEcdf(hist(L_I, breaks = "FD", plot = F),
+                     inverse = T)(equalize(L_pauli))
+   L_lena_H <- HistToEcdf(hist(L_I, breaks = "FD", plot = F),
+                     inverse = T)(equalize(L_lena))
    
    ## cópia
-   nova_originalLab <- originalLab
+   nova_originalLab_pauli <- originalLab_pauli
+   nova_originalLab_lena <- originalLab_lena
    
    ## substituir componente L da nova imagem para L_H - "versão melhorada"
-   nova_originalLab[,,,1] <- L_H
+   nova_originalLab_pauli[,,,1] <- L_pauli_H
+   nova_originalLab_lena[,,,1] <- L_lena_H
    
-   ## imagem melhora em spaço RGB
-   nova_originalRGB <- LabtoRGB(nova_originalLab)
+   ## converter imagem melhorada em spaço RGB
+   nova_originalRGB_pauli <- LabtoRGB(nova_originalLab_pauli)
+   nova_originalRGB_lena <- LabtoRGB(nova_originalLab_lena)
 
    par(mfrow = c(1, 2))
-   ## visualizar imagem melhorada
-   plot(nova_originalRGB, axes = F)
-   title("Nova imagem mandrill")
    
-   ## histograma da imagem melhorada
-   hist(L_H, main = "Histograma L forçada", "FD")
+   ## visualizar imagem pauli melhorada
+   plot(nova_originalRGB_pauli, axes = F)
+   title("Pauli melhorada")
+   
+   ## histograma do componente L-pauli forçada
+   hist(L_pauli_H, main = "Histograma L-pauli forçada", "FD")
+   
+   par(mfrow = c(1, 2))
+   
+   ## visualizar imagem lena melhorada
+   plot(nova_originalRGB_lena, axes = F)
+   title("Lena melhorada")
+   
+   ## histograma do componente L-lena forçada
+   hist(L_lena_H, main = "Histograma L-lena forçada", "FD")
+```
+
+## Resultados
+
+
+```{r echo=FALSE}
+   par(mfrow = c(1, 2))
+
+   ## visualizar original-pauli em RGB
+   plot(originalRGB_pauli, axes = F)
+   title("Pauli original")
+   
+   ## visualizar imagem pauli melhorada
+   plot(nova_originalRGB_pauli, axes = F)
+   title("Pauli melhorada")
+   
+   par(mfrow = c(1, 2))
+   ## visualizar original-lena em RGB
+   plot(originalRGB_lena, axes = F)
+   title("Lena original")
+   
+   ## visualizar imagem lena melhorada
+   plot(nova_originalRGB_lena, axes = F)
+   title("Lena melhorada")
 ```
