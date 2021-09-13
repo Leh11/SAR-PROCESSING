@@ -44,12 +44,26 @@ require(plot3D)
 require(imager)
 
 # carregar de imagem original
-originalRGB_pauli <- load.image("../../image/original/pauli.png")
+originalRGB_pauli <- load.image("../Relatorio/Imagens/Pauli.png")
+originalRGB_krogager <- load.image("../Relatorio/Imagens/Krogager.png")
+originalRGB_hyunen <- load.image("../Relatorio/Imagens/Hyunen.png")
+
 originalRGB_lena <- load.image("../../image/original/lena.png")
+originalRGB_house <- load.image("../../image/original/lighthouse.png")
+originalRGB_mount <- load.image("../../image/original/mount.png")
+originalRGB_mandrill <- load.image("../../image/original/mandrill.png")
+
 
 ## converter imagem original de RGB para espaço lab
 originalLab_pauli <- RGBtoLab(originalRGB_pauli)
+originalLab_krogager <- RGBtoLab(originalRGB_krogager)
+originalLab_hyunen <- RGBtoLab(originalRGB_hyunen)
+
 originalLab_lena <- RGBtoLab(originalRGB_lena)
+originalLab_house <- RGBtoLab(originalRGB_house)
+originalLab_mount <- RGBtoLab(originalRGB_mount)
+originalLab_mandrill <- RGBtoLab(originalRGB_mandrill)
+
 
 #criar grade no intervalo especificados!
 dataMESH <- mesh(seq(from=0, to=1, length.out=50),
@@ -66,7 +80,13 @@ idealLab <- convertColorSpace(idealRGB, from = "CIE RGB",
 
 ## obter componente L de original
 L_pauli <- originalLab_pauli[,,,1]
+L_krogager <- originalLab_krogager[,,,1]
+L_hyunen <- originalLab_hyunen[,,,1]
+
 L_lena <- originalLab_lena[,,,1]
+L_house <- originalLab_house[,,,1]
+L_mount <- originalLab_mount[,,,1]
+L_mandrill <- originalLab_mandrill[,,,1]
 
 ## obter componente L de ideal
 L_I <- idealLab$L
@@ -80,6 +100,7 @@ O histograma em baixo nos mostra como os dados do componente L "Luminância" est
 
 ```{r echo=FALSE, warning=FALSE}
 ## visualizar imagem original e sua histograma
+## ===================== Pauli ========================
 par(mfrow = c(1, 2))
 
 ## visualizar original-pauli em RGB
@@ -90,8 +111,35 @@ title("Pauli em espaço RGB")
 hist(L_pauli, breaks = "FD", xlab = "L",
                                  ylab = "Frequência",
      main = "Componente L-pauli")
-## =================================================
+## ====================================================
 
+## ===================== Krogager =====================
+par(mfrow = c(1, 2))
+
+## visualizar original-krogager em RGB
+plot(originalRGB_krogager, axes = F)
+title("Krogager em espaço RGB")
+
+## visualizar histograma do componente L-krogager original
+hist(L_krogager, breaks = "FD", xlab = "L",
+                                 ylab = "Frequência",
+     main = "Componente L-krogager")
+## ===================================================
+
+## ===================== Hyunen ======================
+par(mfrow = c(1, 2))
+
+## visualizar original-hyunen em RGB
+plot(originalRGB_hyunen, axes = F)
+title("Hyunen em espaço RGB")
+
+## visualizar histograma do componente L-hyune original
+hist(L_hyunen, breaks = "FD", xlab = "L",
+                                 ylab = "Frequência",
+     main = "Componente L-hyunen")
+## ==================================================
+
+## ===================== Lena =======================
 par(mfrow = c(1, 2))
 
 ## visualizar original-lena em RGB
@@ -102,7 +150,48 @@ title("Lena em espaço RGB")
 hist(L_lena, breaks = "FD", xlab = "L",
                                  ylab = "Frequência",
      main = "Componente L-lena")
+## ==================================================
 
+## ===================== House =======================
+par(mfrow = c(1, 2))
+
+## visualizar original-house em RGB
+plot(originalRGB_house, axes = F)
+title("House em espaço RGB")
+
+## visualizar histograma do componente L-house original
+hist(L_house, breaks = "FD", xlab = "L",
+                                 ylab = "Frequência",
+     main = "Componente L-house")
+## ==================================================
+
+## ===================== Mount =======================
+par(mfrow = c(1, 2))
+
+## visualizar original-mount em RGB
+plot(originalRGB_mount, axes = F)
+title("Mount em espaço RGB")
+
+## visualizar histograma do componente L-mount original
+hist(L_mount, breaks = "FD", xlab = "L",
+                                 ylab = "Frequência",
+     main = "Componente L-mount")
+## ==================================================
+
+## ===================== Mandrill =======================
+par(mfrow = c(1, 2))
+
+## visualizar original-mandrill em RGB
+plot(originalRGB_mandrill, axes = F)
+title("Mandrill em espaço RGB")
+
+## visualizar histograma do componente L-mandrill original
+hist(L_mandrill, breaks = "FD", xlab = "L",
+                                 ylab = "Frequência",
+     main = "Componente L-mandrill")
+## ==================================================
+
+## ================= Ideal ==========================
 ## tansformar os componentes do ideal
 ## em objetos cmig para plotagem em RGB
 iR <- as.cimg(idealRGB$X1)
@@ -118,6 +207,7 @@ title("Ideal em espço RGB")
 hist(L_I, breaks = "FD", xlab = "L",
                                ylab = "Frequência",
      main = "Componente L do ideal")
+## =================================================
 ```
 
 # Aplicação
@@ -145,29 +235,68 @@ e a visualizaremos em formato RGB: $T^{-1}\big(\widehat{F}_{L_I}^{-1}(\widehat{F
 ```{r echo=FALSE}
    source("../../code/imagematrix.R")
 
-   ## equalizar componente L de originalLab
-   ## L_pauli_eq <- equalize(L_pauli)
-   ## L_lena_eq <- equalize(L_lena)
-
    ## forçar histograma de componente L de originalLab à 
    ## ficar igual ao componente L de idealLab
    L_pauli_H <- HistToEcdf(hist(L_I, breaks = "FD", plot = F),
                      inverse = T)(equalize(L_pauli))
+   
+   L_krogager_H <- HistToEcdf(hist(L_I, breaks = "FD", plot = F),
+                     inverse = T)(equalize(L_krogager))
+   
+   L_hyunen_H <- HistToEcdf(hist(L_I, breaks = "FD", plot = F),
+                     inverse = T)(equalize(L_hyunen))
+   
    L_lena_H <- HistToEcdf(hist(L_I, breaks = "FD", plot = F),
                      inverse = T)(equalize(L_lena))
    
+   L_house_H <- HistToEcdf(hist(L_I, breaks = "FD", plot = F),
+                     inverse = T)(equalize(L_house))
+   
+   L_mount_H <- HistToEcdf(hist(L_I, breaks = "FD", plot = F),
+                     inverse = T)(equalize(L_mount))
+   
+   L_mandrill_H <- HistToEcdf(hist(L_I, breaks = "FD", plot = F),
+                     inverse = T)(equalize(L_mandrill))
+   
+   
+   
    ## cópia
+   ## pauli
    nova_originalLab_pauli <- originalLab_pauli
+   ## krogager
+   nova_originalLab_krogager <- originalLab_krogager
+   ## hyunen
+   nova_originalLab_hyunen <- originalLab_hyunen
+   ## lena
    nova_originalLab_lena <- originalLab_lena
+   ## house
+   nova_originalLab_house <- originalLab_house
+   ## mount
+   nova_originalLab_mount <- originalLab_mount
+   ## mandrill
+   nova_originalLab_mandrill <- originalLab_mandrill
    
    ## substituir componente L da nova imagem para L_H - "versão melhorada"
    nova_originalLab_pauli[,,,1] <- L_pauli_H
+   nova_originalLab_krogager[,,,1] <- L_krogager_H
+   nova_originalLab_hyunen[,,,1] <- L_hyunen_H
+   
    nova_originalLab_lena[,,,1] <- L_lena_H
+   nova_originalLab_house[,,,1] <- L_house_H
+   nova_originalLab_mount[,,,1] <- L_mount_H
+   nova_originalLab_mandrill[,,,1] <- L_mandrill_H
    
    ## converter imagem melhorada em spaço RGB
    nova_originalRGB_pauli <- LabtoRGB(nova_originalLab_pauli)
+   nova_originalRGB_krogager <- LabtoRGB(nova_originalLab_krogager)
+   nova_originalRGB_hyunen <- LabtoRGB(nova_originalLab_hyunen)
+   
    nova_originalRGB_lena <- LabtoRGB(nova_originalLab_lena)
-
+   nova_originalRGB_house <- LabtoRGB(nova_originalLab_house)
+   nova_originalRGB_mount <- LabtoRGB(nova_originalLab_mount)
+   nova_originalRGB_mandrill <- LabtoRGB(nova_originalLab_mandrill)
+   
+   ##========================  Pauli  ============================
    par(mfrow = c(1, 2))
    
    ## visualizar imagem pauli melhorada
@@ -176,7 +305,31 @@ e a visualizaremos em formato RGB: $T^{-1}\big(\widehat{F}_{L_I}^{-1}(\widehat{F
    
    ## histograma do componente L-pauli forçada
    hist(L_pauli_H, main = "Histograma L-pauli forçada", "FD")
+   ## ============================================================
    
+   ## ========================  Krogager  ========================
+   par(mfrow = c(1, 2))
+   
+   ## visualizar imagem krogager melhorada
+   plot(nova_originalRGB_krogager, axes = F)
+   title("Krogager melhorada")
+   
+   ## histograma do componente L-lena forçada
+   hist(L_krogager_H, main = "Histograma L-krogager forçada", "FD")
+   ## =============================================================
+   
+   ## =======================  Hyunen  ============================
+   par(mfrow = c(1, 2))
+   
+   ## visualizar imagem Hyunen melhorada
+   plot(nova_originalRGB_hyunen, axes = F)
+   title("Hyunen melhorada")
+   
+   ## histograma do componente L-hyunen forçada
+   hist(L_hyunen_H, main = "Histograma L-hyunen forçada", "FD")
+   ## =============================================================
+   
+   ## ========================  Lena  =============================
    par(mfrow = c(1, 2))
    
    ## visualizar imagem lena melhorada
@@ -185,14 +338,49 @@ e a visualizaremos em formato RGB: $T^{-1}\big(\widehat{F}_{L_I}^{-1}(\widehat{F
    
    ## histograma do componente L-lena forçada
    hist(L_lena_H, main = "Histograma L-lena forçada", "FD")
+   ## ============================================================
+   
+   ## ========================  House  =============================
+   par(mfrow = c(1, 2))
+   
+   ## visualizar imagem House melhorada
+   plot(nova_originalRGB_house, axes = F)
+   title("House melhorada")
+   
+   ## histograma do componente L-house forçada
+   hist(L_house_H, main = "Histograma L-house forçada", "FD")
+   ## ============================================================
+   
+   ## ========================  Mount  =============================
+   par(mfrow = c(1, 2))
+   
+   ## visualizar imagem Mount melhorada
+   plot(nova_originalRGB_mount, axes = F)
+   title("Mount melhorada")
+   
+   ## histograma do componente L-mount forçada
+   hist(L_mount_H, main = "Histograma L-mount forçada", "FD")
+   ## ============================================================
+   
+   ## ========================  Mandrill  =============================
+   par(mfrow = c(1, 2))
+   
+   ## visualizar imagem Mandrill melhorada
+   plot(nova_originalRGB_mandrill, axes = F)
+   title("Mandrill melhorada")
+   
+   ## histograma do componente L-mandrill forçada
+   hist(L_mandrill_H, main = "Histograma L-mandrill forçada", "FD")
+   ## ============================================================
 ```
 
 ## Resultados
 
 
 ```{r echo=FALSE}
-   par(mfrow = c(1, 2))
 
+   ## =============== Pauli ===================
+   par(mfrow = c(1, 2))
    ## visualizar original-pauli em RGB
    plot(originalRGB_pauli, axes = F)
    title("Pauli original")
@@ -200,7 +388,31 @@ e a visualizaremos em formato RGB: $T^{-1}\big(\widehat{F}_{L_I}^{-1}(\widehat{F
    ## visualizar imagem pauli melhorada
    plot(nova_originalRGB_pauli, axes = F)
    title("Pauli melhorada")
+   ## =========================================
    
+   ## ============== Krogager =================
+   par(mfrow = c(1, 2))
+   ## visualizar original-krogager em RGB
+   plot(originalRGB_krogager, axes = F)
+   title("Krogager original")
+   
+   ## visualizar imagem krogager melhorada
+   plot(nova_originalRGB_krogager, axes = F)
+   title("Krogager melhorada")
+   ## =========================================
+   
+   ## =============== Hyunen ==================
+   par(mfrow = c(1, 2))
+   ## visualizar original-hyunen em RGB
+   plot(originalRGB_hyunen, axes = F)
+   title("Hyunen original")
+   
+   ## visualizar imagem hyunen melhorada
+   plot(nova_originalRGB_hyunen, axes = F)
+   title("Hyunen melhorada")
+   ## =========================================
+   
+   ## ================ Lena ===================
    par(mfrow = c(1, 2))
    ## visualizar original-lena em RGB
    plot(originalRGB_lena, axes = F)
@@ -209,4 +421,38 @@ e a visualizaremos em formato RGB: $T^{-1}\big(\widehat{F}_{L_I}^{-1}(\widehat{F
    ## visualizar imagem lena melhorada
    plot(nova_originalRGB_lena, axes = F)
    title("Lena melhorada")
+   ## ========================================
+   
+   ## ================ House ===================
+   par(mfrow = c(1, 2))
+   ## visualizar original-house em RGB
+   plot(originalRGB_house, axes = F)
+   title("House original")
+   
+   ## visualizar imagem house melhorada
+   plot(nova_originalRGB_house, axes = F)
+   title("House melhorada")
+   ## ========================================
+   
+   ## ================ Mount ===================
+   par(mfrow = c(1, 2))
+   ## visualizar original-mount em RGB
+   plot(originalRGB_mount, axes = F)
+   title("Mount original")
+   
+   ## visualizar imagem mount melhorada
+   plot(nova_originalRGB_mount, axes = F)
+   title("Mount melhorada")
+   ## ========================================
+   
+   ## ================ Mandrill ===================
+   par(mfrow = c(1, 2))
+   ## visualizar original-mandrill em RGB
+   plot(originalRGB_mandrill, axes = F)
+   title("Mandrill original")
+   
+   ## visualizar imagem mandrill melhorada
+   plot(nova_originalRGB_mandrill, axes = F)
+   title("Mandrill melhorada")
+   ## ========================================
 ```
