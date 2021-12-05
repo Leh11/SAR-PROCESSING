@@ -4,6 +4,9 @@
     % --------------------------------------------------------------------------
     \documentclass{article}
     \usepackage{spconf,amsmath,epsfig}
+    \usepackage{bbm,bm}
+    \usepackage{natbib}
+    
     % Example definitions.
     % --------------------
     \def\x{{\mathbf x}}
@@ -33,6 +36,7 @@
       {Ulil\'e Indeque}
     	{Universidade Federal de Alagoas, Brazil\\
     	Laborat\'orio de Computa\c c\~ao Cient\'ifica \\e An\'alise Num\'erica}
+    	
     \begin{document}
     %\ninept
     %
@@ -122,16 +126,32 @@
     This approach also allows improving an image's contrast by maximizing its realizable color information while retaining the chroma and hue.
     
     
-    \section{PROPOST DESCRIPTION}
-    \label{sec:pro}
-    %O advento de aparelhos sofisticados dedicados a obtenção das imagens tornou o processamento das imagens uma das mais importantes da computação gráfica. A forma como os humanos reconhecem as figuras é um fator preponderante a levar em consideração nessa área. Não obstante a sofisticação dos aparelhos, para exibição é mais fácil lidar com as imagens coloridas codificadas no espaço RGB do que em qualquer outro espaço. Porém, de ponto de vista da percepção humana, isso é insuficiente para o reconhecimento da natureza física do objeto presente na imagem. Isso porque a diferença entre os componentes é notável. Nesse aspeto, o espaço de cores CIELab que apresenta uma distribuição aproximadamente uniforme mostra-se como mais precisa, pois é mais próximo a sensação visual humana.
+    \section{METHODOLOGY}
+    \label{sec:meth}
+    In this section, we will talk about the proposed technique to enhacing the images and the metric to assess the image quality.
     
-    %O presente trabalho visa melhorar a qualidade da imagem codificando-a no espaço de cores CIELab. Isso é feita a partir de transformações aplicadas ao componente \textbf{L-luminância} da cenas observada.
+    The ideal image is an image geneted randonly that contain an uniform distribuition and mapped in CIELab space, denoted by $I=(L_I,a_I,b_I)$, where \textbf{L} represent the luminance component with pixel distribuited from 0 - more dark to 100 - more clear; \textbf{a} component represent green color in the negative axis and red in the positive and, \textbf{b} component represent blue color in the negative axis, whereas yellow in the positive. The a and b components vary from -200 to 200.
     
-    %A técnica consiste em ajustar o histograma do componente L da cena observada à aproximar-se do histograma do mesmo componente da imagem de referência.
+    The originals image are denoted by $O=(r_O, g_O, b_O)$ and encoded in the RGB color space. These images are converted to CIELab color space having the components $O=(L_O, a_O, b_O)$ and, in th final of operation, they are inversely converted to RGB color space, since they are inversible. The mapping from RGB to CIELab can be found in \citep{AssessingInformationContentinColorImages}. 
     
+    \subsection{Proposed approach}
+    The matching histogram technique consists in adjust the histogram of an image to be similar to another referenced image.
     
+    Consider the two above mentioned object $I$ and $O$, respectively the ideal and original image. The matching histogram function receive two object: the $H_{L_I}$ component as reference and the $H_{L_O}$ interest's object. 
+
+    The first step is equalization of $H_{L_O}$. This is done by \textbf{\textit{"cumulative density function - CDF"}}, as follow
+    \begin{equation}
+        \bm _eH_{L_O} = CDF(H_{L_O})
+    \end{equation}
+    The returned object, let's say $_eH_{L_O}$ is passed with $H_{L_I}$ as parameter to compute the matching histogram function. It's can be obtained using the inverse CDF.
+    \begin{equation}
+        \bm _aH_{L_O} = \widehat{CDF}_{L_I}^{-1}(H_{L_I}, _eH_{L_O})
+        \label{inv:cdf}
+    \end{equation}
     
+    From \ref{inv:cdf}, we have as result the histogram of $L_O$ component approximately equal to $H_{L_I}$. Using this component, we can reconstruct the original image $O$, replacing $H_{L_O}$ to $_aH_{L_O}$. Finaly, we have the enhanced original image formed by $O = (_aH_{L_O}, a_I, b_I)$ and converted back to RGB space color $O = (r_O, a_O, b_O)$.
+    
+    \subsection{Evaluation Metrics}
     
     
     
@@ -156,7 +176,7 @@
     \label{sec:typestyle}
     
     
-    \bibliographystyle{IEEEbib}
-    \bibliography{strings,references}
+    \bibliographystyle{agsm}
+    \bibliography{../references}
     
     \end{document}
