@@ -1,6 +1,6 @@
 
 hellinger_distance <- function(p, q){
-  return(sqrt(sum((sqrt(p) - sqrt(q))**2))/sqrt(2))
+  return(sqrt(sum((sqrt(p) - sqrt(q))**2)) / sqrt(2))
 }
 
 equalImg <- function(img){
@@ -21,3 +21,22 @@ equal <- function(imgRGB){
   return(imgRGB)
 }
 
+
+## Fonte: https://gist.github.com/fickse/82faf625242f6843249774f1545d7958
+dc_stretch <- function(r){
+  
+  # r must be a >= 3 band raster
+  
+  # determine eigenspace
+  pc <- princomp(r[])
+  
+  # get inverse rotation matrix
+  R0 <- solve(pc$loadings)
+  
+  # 'stretch' values in pc space, then transform back to RGB space
+  fun <- function(x){(x-min(x))/(max(x)-min(x))*255}
+  scp  <- apply(predict(pc), 2, function(x) scale(ecdf(x)(x), scale = FALSE))
+  scpt <- scp %*% R0
+  r[] <- apply(scpt, 2, fun)
+  r
+}

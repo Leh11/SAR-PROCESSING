@@ -11,28 +11,29 @@ require(imager)
 source("functs.R")
 source("imagematrix.R")
 
-img <- load.image("../image/original/lena.png")
+#img <- load.image("../image/original/lena.png")
 ## =============================================================================
 
 ## parametros de hist3D()
-z <- matrix(c(img), nrow = 3*nrow(img[,,,1]), 
-            ncol = ncol(img[,,,1]), byrow = T)
-x <- seq(1, nrow(z), 1)
-y <- seq(1, ncol(z), 1)
+#z <- matrix(c(img), nrow = 3*nrow(img[,,,1]), 
+ #           ncol = ncol(img[,,,1]), byrow = T)
+
+#x <- seq(1, nrow(z), 1)
+#y <- seq(1, ncol(z), 1)
 
 ## histograma de I
-h_i <- hist3D(x, y, z, shade = .75, plot = T)
+#h_i <- hist3D(x, y, z, shade = .75, plot = T)
 ## =============================================================================
 
-img_eqi <- equalImg(img)
+#img_eqi <- equalImg(img)
 
-z1 <- matrix(c(img_eqi), nrow = 3*nrow(img_eqi[,,,1]), 
-            ncol = ncol(img_eqi[,,,1]), byrow = T)
-x1 <- seq(1, nrow(z1), 1)
-y1 <- seq(1, ncol(z1), 1)
+#z1 <- matrix(c(img_eqi), nrow = 3*nrow(img_eqi[,,,1]), 
+#            ncol = ncol(img_eqi[,,,1]), byrow = T)
+#x1 <- seq(1, nrow(z1), 1)
+#y1 <- seq(1, ncol(z1), 1)
 
 ## versao equalizada
-h_eqi <- hist3D(x1, y1, z1, shade = .75, plot = T)
+#h_eqi <- hist3D(x1, y1, z1, shade = .75, plot = T)
 ## =============================================================================
 
 ## versão de I com contraste melhorada por decorrelação
@@ -42,10 +43,19 @@ h_eqi <- hist3D(x1, y1, z1, shade = .75, plot = T)
 
 #hellinger_distance(h_i, h_eqi)
 
-par(mfrow = c(1, 2))
+#par(mfrow = c(1, 2))
 
-plot(img, axes = F)
-title("Original")
+#plot(img, axes = F)
+#title("Original")
 
-plot(img_eqi, axes = F)
-title("Equalizado")
+#plot(img_eqi, axes = F)
+#title("Equalizado")
+
+originalRGB_pauli <- load.image("../report/Relatorio/Imagens/Pauli.png")
+
+
+z <- matrix(c(originalRGB_pauli),  nrow = 3*nrow(originalRGB_pauli[,,,1]), 
+            ncol = ncol(originalRGB_pauli[,,,1]), byrow = T)
+
+pauli_histogram <- hist3D(z = z, shade = .75)
+
