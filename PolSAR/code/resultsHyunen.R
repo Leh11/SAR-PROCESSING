@@ -71,54 +71,50 @@ versao_hyunen_decorr <- dc_stretch(originalRGB_hyunen)
 #hyunen_histogram <- hist3D(histograma_original_hyunen = z, shade = .75)
 
 ## matriz com todos os componentes de imagem original 
-histograma_original_hyunen <- matrix(c(originalRGB_hyunen),  
+matriz_original_hyunen <- matrix(c(originalRGB_hyunen),  
                                     nrow = 3*nrow(originalRGB_hyunen[,,,1]), 
                                     ncol = ncol(originalRGB_hyunen[,,,1]), byrow = T)
 
 ## matriz com todos os componentes de imagem melhorada
-histograma_melhorada_hyunen <- matrix(c(nova_originalRGB_hyunen),
+matriz_melhorada_hyunen <- matrix(c(nova_originalRGB_hyunen),
                                      nrow = 3*nrow(nova_originalRGB_hyunen[,,,1]), 
                                      ncol = ncol(originalRGB_hyunen[,,,1]), byrow = T)
 
 ## matriz com todos os componentes de imagem equalizada
-histograma_equalizada_hyunen <- matrix(c(versao_hyunen_equalizada),
+matriz_equalizada_hyunen <- matrix(c(versao_hyunen_equalizada),
                                      nrow = 3*nrow(versao_hyunen_equalizada[,,,1]), 
                                      ncol = ncol(versao_hyunen_equalizada[,,,1]), byrow = T)
 
 ## matriz com todos os componentes de imagem melhorada por decorr
-histograma_melhoradaDcorr_hyunen <- matrix(c(versao_hyunen_decorr),
+matriz_melhoradaDcorr_hyunen <- matrix(c(versao_hyunen_decorr),
                                      nrow = 3*nrow(versao_hyunen_decorr[,,,1]), 
                                      ncol = ncol(versao_hyunen_decorr[,,,1]), byrow = T)
 
-bins <- hist(histograma_original_hyunen, breaks = "FD", plot = F)$breaks
+bins <- hist(matriz_original_hyunen, breaks = "FD", plot = F)$breaks
 
-p_original_hyunen <- hist(histograma_original_hyunen, breaks = bins)$density
+p_original_hyunen <- hist(matriz_original_hyunen, breaks = bins)$density
 
-q_melhorada_hyunen <- hist(histograma_melhorada_hyunen, breaks = bins)$density
+q_melhorada_hyunen <- hist(matriz_melhorada_hyunen, breaks = bins)$density
 
-q_equalizada_hyunen <- hist(histograma_equalizada_hyunen, breaks = bins)$density
+q_equalizada_hyunen <- hist(matriz_equalizada_hyunen, breaks = bins)$density
 
-q_melhoradaDcorr_hyunen <- hist(histograma_melhoradaDcorr_hyunen, breaks = bins)$density
+q_melhoradaDcorr_hyunen <- hist(matriz_melhoradaDcorr_hyunen, breaks = bins)$density
 
 
 
 ## ================= visualizar imagem ============================= ##
 
 ## visualizar imagem Hyunen original
-plot(originalRGB_hyunen, axes = F)
-title("Hyunen original")
+save.image(originalRGB_hyunen, "../Articles/image/hyunen_original.png")
 
 ## visualizar imagem Hyunen melhorada por matching histogram
-plot(nova_originalRGB_hyunen, axes = F)
-title("Hyunen melhorada")
+save.image(nova_originalRGB_hyunen, "../Articles/image/hyunen_melhorada.png")
 
 ## visualizar imagem Hyunen equalizada
-plot(versao_hyunen_equalizada, axes = F)
-title("Hyunen equalizada")
+save.image(versao_hyunen_equalizada, "../Articles/image/hyunen_equalizada.png")
 
 ## visualizar imagem Hyunen melhorada por decorr
-plot(versao_hyunen_decorr, axes = F)
-title("Hyunen melhorada por decorr")
+save.image(versao_hyunen_decorr, "../Articles/image/hyunen_decorr.png")
 
 
 ## =================== aplicar distancia de hellinger ============== ##

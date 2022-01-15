@@ -71,57 +71,52 @@ versao_pauli_decorr <- dc_stretch(originalRGB_pauli)
 #pauli_histogram <- hist3D(histograma_original_pauli = z, shade = .75)
 
 ## matriz com todos os componentes de imagem original 
-histograma_original_pauli <- matrix(c(originalRGB_pauli),  
+matrix_original_pauli <- matrix(c(originalRGB_pauli),  
                                     nrow = 3*nrow(originalRGB_pauli[,,,1]), 
                                     ncol = ncol(originalRGB_pauli[,,,1]), byrow = T)
 
 ## matriz com todos os componentes de imagem melhorada
-histograma_melhorada_pauli <- matrix(c(nova_originalRGB_pauli),
+matrix_melhorada_pauli <- matrix(c(nova_originalRGB_pauli),
                                      nrow = 3*nrow(nova_originalRGB_pauli[,,,1]), 
                                      ncol = ncol(originalRGB_pauli[,,,1]), byrow = T)
 
 ## matriz com todos os componentes de imagem equalizada
-histograma_equalizada_pauli <- matrix(c(versao_pauli_equalizada),
+matrix_equalizada_pauli <- matrix(c(versao_pauli_equalizada),
                                      nrow = 3*nrow(versao_pauli_equalizada[,,,1]), 
                                      ncol = ncol(versao_pauli_equalizada[,,,1]), byrow = T)
 
 ## matriz com todos os componentes de imagem melhorada por decorr
-histograma_melhoradaDcorr_pauli <- matrix(c(versao_pauli_decorr),
+matrix_melhoradaDcorr_pauli <- matrix(c(versao_pauli_decorr),
                                      nrow = 3*nrow(versao_pauli_decorr[,,,1]), 
                                      ncol = ncol(versao_pauli_decorr[,,,1]), byrow = T)
 
 bins <- hist(histograma_original_pauli, breaks = "FD", plot = F)$breaks
 
-p_original_pauli <- hist(histograma_original_pauli, breaks = bins)$density
+p_original_pauli <- hist(matrix_original_pauli, breaks = bins)$density
 
-q_melhorada_pauli <- hist(histograma_melhorada_pauli, breaks = bins)$density
+q_melhorada_pauli <- hist(matrix_melhorada_pauli, breaks = bins)$density
 
-q_equalizada_pauli <- hist(histograma_equalizada_pauli, breaks = bins)$density
+q_equalizada_pauli <- hist(matrix_equalizada_pauli, breaks = bins)$density
 
-q_melhoradaDcorr_pauli <- hist(histograma_melhoradaDcorr_pauli, breaks = bins)$density
+#q_melhoradaDcorr_pauli <- hist(matrix_melhoradaDcorr_pauli, breaks = bins)$density
 
 
 
 ## ================= visualizar imagem ============================= ##
 
 ## visualizar imagem pauli original
-plot(originalRGB_pauli, axes = F)
-title("Pauli original")
-save.image(originalRGB_pauli, "../image/pauli_original.png")
-img <- build_image_matrix(originalRGB_pauli)
+#plot(originalRGB_pauli, axes = F)
+#title("Pauli original")
+save.image(originalRGB_pauli, "../Articles/image/pauli_original.png")
 
 ## visualizar imagem pauli melhorada por matching histogram
-plot(nova_originalRGB_pauli, axes = F)
-title("Pauli melhorada")
-imagematrixPNG(img, 'img')
+save.image(nova_originalRGB_pauli, "../Articles/image/pauli_melhorada.png")
 
 ## visualizar imagem pauli equalizada
-plot(versao_pauli_equalizada, axes = F)
-title("Pauli equalizada")
+save.image(versao_pauli_equalizada, "../Articles/image/pauli_equalizada.png")
 
 ## visualizar imagem pauli melhorada por decorr
-plot(versao_pauli_decorr, axes = F)
-title("Pauli melhorada por decorr")
+save.image(versao_pauli_decorr, "../Articles/image/pauli_decorr.png")
 
 
 ## =================== aplicar distancia de hellinger ============== ##
@@ -135,5 +130,5 @@ CalcHellingerDist(p_original_pauli, q_equalizada_pauli)
 
 
 ## distance entre original e melhorada por matching
-CalcHellingerDist(p_original_pauli, q_melhoradaDcorr_pauli)
+#CalcHellingerDist(p_original_pauli, q_melhoradaDcorr_pauli)
 

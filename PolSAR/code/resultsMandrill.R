@@ -105,20 +105,16 @@ q_melhoradaDcorr_mandrill <- hist(matriz_melhoradaDcorr_mandrill, breaks = bins)
 ## ================= visualizar imagem ============================= ##
 
 ## visualizar imagem mandrill original
-plot(originalRGB_mandrill, axes = F)
-title("mandrill original")
+save.image(originalRGB_mandrill, "../Articles/image/mandrill_original.png")
 
 ## visualizar imagem mandrill melhorada por matching histogram
-plot(nova_originalRGB_mandrill, axes = F)
-title("mandrill melhorada")
+save.image(nova_originalRGB_mandrill, "../Articles/image/mandrill_melhorada.png")
 
 ## visualizar imagem mandrill equalizada
-plot(versao_mandrill_equalizada, axes = F)
-title("mandrill equalizada")
+save.image(versao_mandrill_equalizada, "../Articles/image/mandrill_equalizada.png")
 
 ## visualizar imagem mandrill melhorada por decorr
-plot(versao_mandrill_decorr, axes = F)
-title("mandrill melhorada por decorr")
+save.image(versao_mandrill_decorr, "../Articles/image/mandrill_decorr.png")
 
 
 ## =================== aplicar distancia de hellinger ============== ##

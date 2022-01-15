@@ -59,7 +59,7 @@ nova_originalRGB_krogager <- LabtoRGB(nova_originalLab_krogager)
 versao_krogager_equalizada <- equalImg(originalRGB_krogager)
 
 
-## ================= versão melhorada por deco Decorr ================= ##
+## ================= versão melhorada por Decorr ================= ##
 
 versao_krogager_decorr <- dc_stretch(originalRGB_krogager)
 
@@ -92,7 +92,7 @@ matriz_melhoradaDcorr_krogager <- matrix(c(versao_krogager_decorr),
                                           ncol = ncol(versao_krogager_decorr[,,,1]), byrow = T)
 
 
-bins <- hist(histograma_original_krogager, breaks = "FD", plot = F)$breaks
+bins <- hist(matriz_original_krogager, breaks = "FD", plot = F)$breaks
 
 p_original_krogager <- hist(matriz_original_krogager, breaks = bins)$density
 
@@ -107,20 +107,16 @@ q_melhoradaDcorr_krogager <- hist(matriz_melhoradaDcorr_krogager, breaks = bins)
 ## ================= visualizar imagem ============================= ##
 
 ## visualizar imagem krogager original
-plot(originalRGB_krogager, axes = F)
-title("Krogager original")
+save.image(originalRGB_krogager, "../Articles/image/krogager_original.png")
 
 ## visualizar imagem krogager melhorada por matching histogram
-plot(nova_originalRGB_krogager, axes = F)
-title("Krogager melhorada")
+save.image(nova_originalRGB_krogager, "../Articles/image/krogager_melhorada.png")
 
 ## visualizar imagem krogager equalizada
-plot(versao_krogager_equalizada, axes = F)
-title("Krogager equalizada")
+save.image(versao_krogager_equalizada, "../Articles/image/krogager_equalizada.png")
 
 ## visualizar imagem krogager melhorada por decorr
-plot(versao_krogager_decorr, axes = F)
-title("Krogager melhorada por decorr")
+save.image(versao_krogager_decorr, "../Articles/image/krogager_decorr.png")
 
 
 ## =================== aplicar distancia de hellinger ============== ##
