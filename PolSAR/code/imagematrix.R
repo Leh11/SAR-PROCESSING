@@ -37,7 +37,7 @@ print.imagematrix <- function(x, ...) {
 plot.imagematrix <- function(x, ...) {
   colvec <- switch(attr(x, "type"),
                 grey=grey(x),
-                rgb=rgb(x[,,1,1], x[,,1,2], x[,,1,3]))
+                rgb=rgb(x[,,1], x[,,2], x[,,3]))
   if (is.null(colvec)) stop("image matrix is broken.")
   colors <- unique(colvec)
   colmat <- array(match(colvec, colors), dim=dim(x)[1:2])
