@@ -107,10 +107,13 @@ q_melhoradaDcorr_pauli <- hist(histograma_melhoradaDcorr_pauli, breaks = bins)$d
 ## visualizar imagem pauli original
 plot(originalRGB_pauli, axes = F)
 title("Pauli original")
+save.image(originalRGB_pauli, "../image/pauli_original.png")
+img <- build_image_matrix(originalRGB_pauli)
 
 ## visualizar imagem pauli melhorada por matching histogram
 plot(nova_originalRGB_pauli, axes = F)
 title("Pauli melhorada")
+imagematrixPNG(img, 'img')
 
 ## visualizar imagem pauli equalizada
 plot(versao_pauli_equalizada, axes = F)

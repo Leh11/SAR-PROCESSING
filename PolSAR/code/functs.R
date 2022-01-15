@@ -1,3 +1,19 @@
+build_image <- function(dataImage){
+  first <- dataImage[,,1,1]
+  second <- dataImage[,,1,2]
+  third <- dataImage[,,1,3]
+  
+  img <- array(c(first, second, third), dim = c(nrow(dataImage), ncol(dataImage), 3))
+}
+
+build_matrix <- function(dataImage){
+  first <- dataImage[,,1,1]
+  second <- dataImage[,,1,2]
+  third <- dataImage[,,1,3]
+  
+  img <- matrix(c(first, second, third), nrow = nrow(dataImage), ncol = ncol(dataImage))
+}
+
 
 hellinger_distance <- function(p, q){
   return(sqrt(sum((sqrt(p) - sqrt(q))**2)) / sqrt(2))
