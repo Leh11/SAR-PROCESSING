@@ -181,7 +181,7 @@ the indicator $I$ is defined as
         0,  & t_j > t.
     \end{cases}
 \end{equation}
-Applying~\eqref{:ecdf} to $H_{L_O}$, we obtain the equalized image, denoted as $_eH_{L_O}$. 
+Applying~\eqref{eq:ecdf} to $H_{L_O}$, we obtain the equalized image, denoted as $_eH_{L_O}$. 
 
 The matching histogram can be obtained using the inverse empirical cumulative distribution function of $H_I$, applied to $_eH_{L_O}$
 \begin{equation}
@@ -192,6 +192,15 @@ The matching histogram can be obtained using the inverse empirical cumulative di
 From~\eqref{inv:cdf}, we have as result the histogram of $L_O$ component approximately equal to $H_{L_I}$. 
 Using this component, we can reconstruct the original image $O$, replacing $H_{L_O}$ to $_aH_{L_O}$. 
 Finaly, we have the enhanced original image formed by $O = (_aH_{L_O}, a_I, b_I)$ and converted back to RGB space color $O = (r_O, a_O, b_O)$.
+
+The methodology is outlined in Fig.~\ref{Fig:Outline}.
+
+\begin{figure*}
+	\centering
+	\includegraphics[width=.9\linewidth]{../../Diagrams/Outline}
+	\caption{Outline of the enhancement procedure}\label{Fig:Outline}
+\end{figure*}
+
 
 \subsection{Evaluation Metrics}
 
@@ -210,6 +219,7 @@ D_{L}(p,q) & = \sum_{L} p(L) \log\frac{p(L)}{q(L)},\\
 D_{a}(p,q) & = \sum_{a} p(a) \log\frac{p(a)}{q(a)},\\
 D_{b}(p,q) & = \sum_{b} p(b) \log\frac{p(b)}{q(b)}.
 \end{align}
+The authors then propose adding these components divergences to obtain a measure of the difference between the images.
 The Kullback-Leibler divergence is not necessary symmetric, and requires computing a ratio in which the denominator may be zero, and the logarithm of a quantity that may be zero.
 
 The Hellinger distance is a widely used measure which does not have the problems metioned above.
@@ -219,7 +229,6 @@ It is defined as
 \end{equation}
 \citet{BanchmarckSimiliraty} computed the Hellinger distance along with other seven metrics, considering some factors such as complexity and the relationship with the amount of noise, and the Hellinger distance presented consistent and acceptable results.
 We used the Hellinger distance to computed the dissimilarity between the images and the ideal signal.
-
 
 
 
@@ -254,9 +263,13 @@ While the three first have crisp and highly saturated colors, the last one is mo
 
 \section{DISCUSSION}
 \label{sec:typestyle}
+We have presented an image enhancement technique which preserves the chroma and hue.
+The transformation is based on pixel-wise operations, and requires a reference image that is fixed for every application and input image size.
+The results suggest that preserving the chroma and hue is a relevant feature, in particular for the visual interpretation of polarimetric decompositions.
 
+We suggest adding this transformation, and its associated measure of performance, to visualization pipelines.
 
-\bibliographystyle{agsm}
+\bibliographystyle{IEEEtranSN}
 \bibliography{../references}
 
 \end{document}
