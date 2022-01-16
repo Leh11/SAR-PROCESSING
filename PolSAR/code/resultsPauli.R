@@ -90,7 +90,7 @@ matrix_melhoradaDcorr_pauli <- matrix(c(versao_pauli_decorr),
                                      nrow = 3*nrow(versao_pauli_decorr[,,,1]), 
                                      ncol = ncol(versao_pauli_decorr[,,,1]), byrow = T)
 
-bins <- hist(histograma_original_pauli, breaks = "FD", plot = F)$breaks
+bins <- hist(matrix_original_pauli, breaks = "FD", plot = F)$breaks
 
 p_original_pauli <- hist(matrix_original_pauli, breaks = bins)$density
 
@@ -98,7 +98,7 @@ q_melhorada_pauli <- hist(matrix_melhorada_pauli, breaks = bins)$density
 
 q_equalizada_pauli <- hist(matrix_equalizada_pauli, breaks = bins)$density
 
-#q_melhoradaDcorr_pauli <- hist(matrix_melhoradaDcorr_pauli, breaks = bins)$density
+q_melhoradaDcorr_pauli <- hist(matrix_melhoradaDcorr_pauli, breaks = bins)$density
 
 
 
