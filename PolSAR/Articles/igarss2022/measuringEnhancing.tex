@@ -6,6 +6,9 @@
 \usepackage{spconf,amsmath,epsfig}
 \usepackage{bbm,bm}
 \usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{amsmath}
 
 % Example definitions.
 % --------------------
@@ -17,14 +20,15 @@
 \title{Measuring and Enhancing the Visual Content of Polarimetric Synthetic Aperture Radar Decompositions}
 
 \twoauthors
-  {Alejandro C.\ Frery\sthanks{CONTACT A.\ C.\ Frery Email: alejandro.frery@vuw.ac.nz}}
+  {Ulil\'e Indeque \sthanks{Email: ui@laccan.ufal.br}}
+  {Laborat\'orio de Computa\c c\~ao Cient\'ifica \\e An\'alise Num\'erica\\
+  	Universidade Federal de Alagoas, Brazil
+  }
+{Alejandro C.\ Frery\sthanks{Email: alejandro.frery@vuw.ac.nz}}
    	{School of Mathematics and Statistics\\
    		Victoria University of Wellington, New Zealand
    	}
-  {Ulil\'e Indeque}
-   	{Laborat\'orio de Computa\c c\~ao Cient\'ifica \\e An\'alise Num\'erica\\
-   		Universidade Federal de Alagoas, Brazil
-   	}
+  
    	
 \begin{document}
 %\ninept
@@ -32,7 +36,7 @@
 \maketitle
 %
 \begin{abstract}
-Polarimetric Synthetic Aperture Radar images provide important information about the illuminated scene.
+Polarimetric Synthetic Aperture Radar images provide important information about the scene under observation.
 There are several ways in which such information can be extracted, among them the visualization of polarimetric decompositions.
 A polarimetric decomposition extracts features which, in principle, are related to basic components of the scene.
 Its visualization depicts such components as variations in hue and intensity, but its interpretation may be hampered by low contrast.
@@ -88,6 +92,9 @@ I_{\text{HH}} & \text{Cov}(S_{\text{HH}},S_\text{HV}) & \text{Cov}(S_{\text{HH}}
 \label{Eq:Multilook}
 \end{equation}
 in which ``$*$'' denotes the complex conjugate, the diagonal elements are intensities, and the off-diagonal entries are the complex covariances between channels.
+Except from a scale, \eqref{Eq:Multilook} is know as the coherence matrix.
+There are other forms of storing the polarimetric return, among them the Pauli and the Kennaugh decompositions.
+These representations are related, and it is relatively simple to transform one into another.
 
 It is not possible to visualize directly observations of the form~\eqref{Eq:Multilook}, as they belong to $\mathbbm R_+^3\times \mathbbm C^3$, i.e., they are nine-dimensional objects.
 Such observations encode valuable information from the target, and it is desirable to extract and visualize it.
@@ -97,7 +104,7 @@ Such extraction can be accomplished using Decomposition Theorems.
 
 PolSAR decomposition consists in retrieving the components which gave rise to each observation.
 The purpose of such operation is to identify the average scattering mechanism within each pixel.
-In the following, we will summarize the main theorems for incoherent observations.
+%In the following, we will summarize the main theorems for incoherent observations.
 
 \citet{ModelingandInterpretationofScatteringMechanismsinPolarimetricSyntheticApertureRadarAdvancesandPerspectives2014} discuss the general additive decomposition framework
 \begin{equation}
@@ -113,6 +120,17 @@ Their coefficients in an observation depends both on the target and on the sensi
 
 We are interested in decomposition theorems that naturally lead to visualization, i.e., that produce three components that can be mapped onto the red, green, and blue channels.
 Examples of such decompositions are Barnes-Holmes, Pauli, Krogager, and Hyunen.
+
+The dynamic range of the components values is typically very large, and the user has to choose how to map them into, usually, the $[0,255]$ interval in order to produce a pseudocolor image.
+Typical mappings are the linear,
+the trimmed linear,
+and the equalization.
+The linear mapping usually produces almost black images, while the trimmed linear requires stipulating a lower and upper bound.
+Equalization has the advantage of producing values in $[0,1]$ which can be easily converted to $[0,255]$, but it may lead to color which are not related to the original ones.
+
+A very popular visual enhancement technique is the spectral decorrelation.
+It consists in computing the principal components of the original values (the decorrelation step), enhancing, and applying the inverse rotation.
+This operation tends to produce crisp images with exaggerated contrast.
 
 %\subsection{Information Content}
 
@@ -146,45 +164,61 @@ This color representation, differently from the RGB and CMYK color spaces, appro
 \label{match}
 The matching histogram technique consists in adjust the histogram of an image to be similar to another referenced image.
 
-Consider the two above mentioned object $I$ and $O$, respectively the ideal and original image. The matching histogram function receive two object: the $H_{L_I}$ component as reference and the $H_{L_O}$ interest's object. 
+Consider two objects $I$ and $O$, respectively the ideal and original image.
+The matching histogram function receives two object: the $H_{L_I}$ component as reference and the $H_{L_O}$ interest's object. 
 
-The first step is equalization of $H_{L_O}$. This is done by \textbf{\textit{"Empirical Cumulative Distribution Function - ECDF"}}, defined by 
-
+The first step is equalization of $H_{L_O}$. 
+This is done by applying the Empirical Cumulative Distribution Function - ECDF to the data.
+This function is defined by 
 \begin{equation}
-    \bm F(t) = \sum_{j=1}^N I(t_j \leq t) 
+    \bm F(t) = \sum_{j=1}^N I(t_j \leq t) ,
     \label{eq:ecdf}
 \end{equation}
-The indicator $I$ is defined as
+the indicator $I$ is defined as
 \begin{equation}
-    \bm I(t_j \leq t) = \begin{Bmatrix}
-        1,  t_j \leq t \\
-        0,  t_j > t
-    \end{Bmatrix}
+    \bm I(t_j \leq t) = \begin{cases}
+        1,  & t_j \leq t \\
+        0,  & t_j > t.
+    \end{cases}
 \end{equation}
+Applying~\eqref{:ecdf} to $H_{L_O}$, we obtain the equalized image, denoted as $_eH_{L_O}$. 
 
-Applying the \ref{eq:ecdf} in $H_{L_O}$, we obtain as result, equalized object, denoted as $_eH_{L_O}$. 
-
-The matching histogram can be obtained using the inverse empirical function of $H_I$, applied to $_eH_{L_O}$
+The matching histogram can be obtained using the inverse empirical cumulative distribution function of $H_I$, applied to $_eH_{L_O}$
 \begin{equation}
-    \bm F^{-1}_{L_I}(_eH_{L_O})
+    \bm F^{-1}_{L_I}(_eH_{L_O}).
     \label{inv:cdf}
 \end{equation}
 
-From \ref{inv:cdf}, we have as result the histogram of $L_O$ component approximately equal to $H_{L_I}$. Using this component, we can reconstruct the original image $O$, replacing $H_{L_O}$ to $_aH_{L_O}$. Finaly, we have the enhanced original image formed by $O = (_aH_{L_O}, a_I, b_I)$ and converted back to RGB space color $O = (r_O, a_O, b_O)$.
+From~\eqref{inv:cdf}, we have as result the histogram of $L_O$ component approximately equal to $H_{L_I}$. 
+Using this component, we can reconstruct the original image $O$, replacing $H_{L_O}$ to $_aH_{L_O}$. 
+Finaly, we have the enhanced original image formed by $O = (_aH_{L_O}, a_I, b_I)$ and converted back to RGB space color $O = (r_O, a_O, b_O)$.
 
 \subsection{Evaluation Metrics}
 
-The \ref{match} presented the central idea to improve the image quality. However, a very important point is to know how efficient the proprosed model is, how improved were the images and what are the similarities between the "original images" of the input and the "improved images" of the output. Therefore, it is essential to apply an adequate metric capable of providing these answers. This can be done by comparing the image's histograms, let's say $p(L, a, b)$ and $q(L, a, b)$. There are numerous proposed metrics to quantify the similarity between two probality distribuition, among which "\textit{Kullbeck Leibler}" \citep{AssessingInformationContentinColorImages}, "\textit{Hellinger distance}", "\textit{Euclidean distance}" and "\textit{Canberra distance}" \citep{BanchmarckSimiliraty}. 
+An important point is to know how efficient the proposed technique is, i.e., a quantitative measure of the closeness of the results to the ideal image. 
 
-The "\textit{Hellinger distance}", widely used in information theory, was chosen as a metric to quantify the similarity between two probability distributions; in the tests performed by \citep{BanchmarckSimiliraty} for eight selected metrics, considering some factors such as complexity and the relationship with the amount of noise, "\textit{Hellinger distance}" presents acceptable results. Given two probalibility distribuitionsl: $p(L, a, b)$ and $q(L, a, b)$, the "\textit{Hellinger distance}" is defined by,
+This can be done by comparing the images histograms
+There are several metrics that quantify the similarity between two probability distributions, among them the Kullback-Leibler divergence~\citep{AssessingInformationContentinColorImages}, and the
+the Hellinger, 
+Euclidean, and Canberra distances~\citep{BanchmarckSimiliraty}.
+\citet{AssessingInformationContentinColorImages} used the Kullback-Leibler divergence in their proposal.
 
+Consider the images $p(L, a, b)$ and $q(L, a, b)$.
+The Kullback-Leibler divergences between the $p$ and $q$ channels
+\begin{align}
+D_{L}(p,q) & = \sum_{L} p(L) \log\frac{p(L)}{q(L)},\\
+D_{a}(p,q) & = \sum_{a} p(a) \log\frac{p(a)}{q(a)},\\
+D_{b}(p,q) & = \sum_{b} p(b) \log\frac{p(b)}{q(b)}.
+\end{align}
+The Kullback-Leibler divergence is not necessary symmetric, and requires computing a ratio in which the denominator may be zero, and the logarithm of a quantity that may be zero.
+
+The Hellinger distance is a widely used measure which does not have the problems metioned above.
+It is defined as
 \begin{equation}
-    \bm H(p, q) = \frac{1}{2}\sqrt{\sum_{j=1}^k (\sqrt{p_j} - \sqrt{q_j})^2}
+	H(p, q) = \frac{1}{2}\sqrt{\sum_{j=1}^k \big(\sqrt{p_j} - \sqrt{q_j}\big)^2}.
 \end{equation}
-
-The closer to zero the value of $H(p, q)$, it means more similarity between $p()$ and $q()$, and if value of $H(p, q)$ is zero, it means they are similar or equal.
-
-
+\citet{BanchmarckSimiliraty} computed the Hellinger distance along with other seven metrics, considering some factors such as complexity and the relationship with the amount of noise, and the Hellinger distance presented consistent and acceptable results.
+We used the Hellinger distance to computed the dissimilarity between the images and the ideal signal.
 
 
 
@@ -195,8 +229,28 @@ The closer to zero the value of $H(p, q)$, it means more similarity between $p()
 
 
 \section{RESULTS}
-\label{sec:pagestyle}
+\label{Sec:Results}
 
+Fig.~\ref{Fig:Images} shows an original Pauli decomposition and a zoom (Figs.~\ref{Im:Original} and~\ref{Im:ZoomOriginal}),
+the result of applying contrast enhancement by spectral decorrelation (Figs.~\ref{Im:Decorrelated} and~\ref{Im:ZoomDecorrelated}),
+the version with equalized bands (Fig.~\ref{Im:Equalized} and~\ref{Im:ZoomEqualized}),
+and the result of applying contrast improvement in the CIELab space (Figs.~\ref{Im:Enhanced} and~\ref{Im:ZoomImproved}).
+The differences are noticeable.
+While the three first have crisp and highly saturated colors, the last one is more realistic while preserving the hue.
+
+\begin{figure*}[hbt]
+\centering
+\subcaptionbox{Original\label{Im:Original}}{\includegraphics[width=.24\linewidth]{../image/pauli_original}}
+\subcaptionbox{Decorrelated\label{Im:Decorrelated}}{\includegraphics[width=.24\linewidth]{../image/pauli_decorr}}
+\subcaptionbox{Equalized\label{Im:Equalized}}{\includegraphics[width=.24\linewidth]{../image/pauli_equalizada}}
+\subcaptionbox{Enhanced\label{Im:Enhanced}}{\includegraphics[width=.24\linewidth]{../image/pauli_melhorada}}
+%
+\subcaptionbox{Original zoom\label{Im:ZoomOriginal}}{\includegraphics[width=.24\linewidth,viewport=575 600 825 850,clip]{../image/pauli_original}}
+\subcaptionbox{Decorrelated zoom\label{Im:ZoomDecorrelated}}{\includegraphics[width=.24\linewidth,viewport=575 600 825 850,clip]{../image/pauli_decorr}}
+\subcaptionbox{Equalized zoom\label{Im:ZoomEqualized}}{\includegraphics[width=.24\linewidth,viewport=575 600 825 850,clip]{../image/pauli_equalizada}}
+\subcaptionbox{Enhanced zoom\label{Im:ZoomImproved}}{\includegraphics[width=.24\linewidth,viewport=575 600 825 850,clip]{../image/pauli_melhorada}}
+\caption{Original Pauli, enhanced by decorrelation, equalized, and enhanced images, along with their zooms}\label{Fig:Images}
+\end{figure*}
 
 \section{DISCUSSION}
 \label{sec:typestyle}
