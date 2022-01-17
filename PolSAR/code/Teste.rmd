@@ -3,7 +3,7 @@ title: "teste.rmd"
 output: html_document
 ---
 
-```{r echo=FALSE, warning=FALSE}
+```{r echo=TRUE, warning=FALSE}
 
 require(colordistance)
 require(plot3D)
@@ -105,7 +105,7 @@ q_melhorada_pauli <- hist(matrix_melhorada_pauli, breaks = bins)$density
 
 q_equalizada_pauli <- hist(matrix_equalizada_pauli, breaks = bins)$density
 
-#q_melhoradaDcorr_pauli <- hist(matrix_melhoradaDcorr_pauli, breaks = bins)$density
+q_melhoradaDcorr_pauli <- hist(matrix_melhoradaDcorr_pauli, breaks = bins)$density
 
 
 
@@ -135,4 +135,4 @@ CalcHellingerDist(p_original_pauli, q_melhorada_pauli)
 CalcHellingerDist(p_original_pauli, q_equalizada_pauli)
 
 ## distance entre original e melhorada por decora
-#CalcHellingerDist(p_original_pauli, q_melhoradaDcorr_pauli)
+CalcHellingerDist(p_original_pauli, q_melhoradaDcorr_pauli)
