@@ -47,6 +47,7 @@ imagematrixPNG(imagematrix(PauliDecorrPCArot01), "pauli_decorr.png")
 system("convert -transpose pauli_decorr.png pauli_decorr_t.png")
 system("rm pauli_decorr.png") 
 system("mv pauli_decorr_t.png pauli_decorr.png")
+decor <- as.cimg(PauliDecorrPCArot01)
 
 ## ================= converter imagem original para Lab ================ ##
 originalLab_pauli <- RGBtoLab(originalRGB_pauli)
@@ -126,9 +127,9 @@ matrix_equalizada_pauli <- matrix(c(versao_pauli_equalizada),
                                      ncol = ncol(versao_pauli_equalizada[,,,1]), byrow = T)
 
 ## matriz com todos os componentes de imagem melhorada por decorr
-matrix_melhoradaDcorr_pauli <- matrix(c(versao_pauli_decorr),
-                                     nrow = 3*nrow(versao_pauli_decorr[,,,1]), 
-                                     ncol = ncol(versao_pauli_decorr[,,,1]), byrow = T)
+matrix_melhoradaDcorr_pauli <- matrix(c(PauliDecorrPCArot01),
+                                     nrow = 3*nrow(PauliDecorrPCArot01[,,1]), 
+                                     ncol = ncol(PauliDecorrPCArot01[,,1]), byrow = T)
 
 bins <- hist(matrix_original_pauli, breaks = "FD", plot = F)$breaks
 
@@ -156,7 +157,7 @@ q_melhoradaDcorr_pauli <- hist(matrix_melhoradaDcorr_pauli, breaks = bins)$densi
 #save.image(versao_pauli_equalizada, "../Articles/image/pauli_equalizada.png")
 
 ## visualizar imagem pauli melhorada por decorr
-#save.image(versao_pauli_decorr, "../Articles/image/pauli_decorr.png")
+#save.image(decor, "../Articles/image/pauli_decorr.png")
 
 
 ## =================== aplicar distancia de hellinger ============== ##
