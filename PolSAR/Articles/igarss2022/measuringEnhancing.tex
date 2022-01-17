@@ -226,6 +226,7 @@ The Hellinger distance is a widely used measure which does not have the problems
 It is defined as
 \begin{equation}
 	H(p, q) = \frac{1}{2}\sqrt{\sum_{j=1}^k \big(\sqrt{p_j} - \sqrt{q_j}\big)^2}
+	\label{Eq:Hellinger}
 \end{equation}
 for each component as in Eqs.~\eqref{eq:KLL}--\eqref{eq:KLb}.
 \citet{BanchmarckSimiliraty} computed the Hellinger distance along with other seven metrics, considering some factors such as complexity and the relationship with the amount of noise, and the Hellinger distance presented consistent and acceptable results.
@@ -255,6 +256,13 @@ In particular, the image enhanced by decorrelation (Figs.~\ref{Im:Decorrelated} 
 \subcaptionbox{Enhanced zoom\label{Im:ZoomImproved}}{\includegraphics[width=.24\linewidth,viewport=575 600 825 850,clip]{../image/pauli_melhorada}}
 \caption{Original Pauli, enhanced by decorrelation, equalized, and enhanced images, along with their zooms}\label{Fig:Images}
 \end{figure*}
+
+We computed the distances of these images to the ideal one using~\eqref{Eq:Hellinger}.
+The results are:
+$H(\text{Original}, \text{Ideal})=0.330$,
+$H(\text{Equalized}, \text{Ideal})=0.2607$,
+$H(\text{Improved}, \text{Ideal})=0.1868$.
+These distances show that the improved version is the closest to the ideal image.
 
 \section{DISCUSSION}
 \label{sec:typestyle}
