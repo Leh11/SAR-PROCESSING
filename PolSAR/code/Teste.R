@@ -1,10 +1,3 @@
----
-title: "teste.rmd"
-output: html_document
----
-
-```{r echo=TRUE, warning=FALSE}
-
 require(colordistance)
 require(plot3D)
 require(imager)
@@ -14,6 +7,46 @@ source("imagematrix.R")
 
 ## ========================= carregar imagem =========================== ##
 originalRGB_pauli <- load.image("../report/Relatorio/Imagens/Pauli.png")
+# plot((imagematrix(originalRGB_pauli, type="rgb")))
+
+PauliR <- as.vector(originalRGB_pauli[,,1])
+PauliG <- as.vector(originalRGB_pauli[,,2])
+PauliB <- as.vector(originalRGB_pauli[,,3])
+
+Pauli <- data.frame(PauliR, PauliG, PauliB)
+
+PauliDecorr <- prcomp(Pauli, center=TRUE, scale.=TRUE, retx=TRUE)
+range(PauliDecorr$x[,1])
+range(PauliDecorr$x[,2])
+range(PauliDecorr$x[,3])
+
+to01 <- function(x) {
+  (x - min(x)) / (max(x)-min(x))
+}
+
+PauliDecorrR <- to01(PauliDecorr$x[,1]) - .5
+PauliDecorrG <- to01(PauliDecorr$x[,2]) - .5
+PauliDecorrB <- to01(PauliDecorr$x[,3]) - .5
+
+PauliDecorrPCA <- as.matrix(data.frame(PauliDecorrR, PauliDecorrG, PauliDecorrB))
+
+PauliDecorrPCArot <- PauliDecorrPCA %*% PauliDecorr$rotation
+range(PauliDecorrPCArot)
+
+PauliDecorrPCArot01 <- unlist(data.frame(
+    to01(PauliDecorrPCArot[,1]),
+    to01(PauliDecorrPCArot[,2]),
+    to01(PauliDecorrPCArot[,3])
+))
+
+PauliDecorrPCArot01 <- array(PauliDecorrPCArot01, dim=dim(originalRGB_pauli)[-3])
+                      
+plot(imagematrix(PauliDecorrPCArot01))
+
+imagematrixPNG(imagematrix(PauliDecorrPCArot01), "pauli_decorr.png")
+system("convert -transpose pauli_decorr.png pauli_decorr_t.png")
+system("rm pauli_decorr.png") 
+system("mv pauli_decorr_t.png pauli_decorr.png")
 
 ## ================= converter imagem original para Lab ================ ##
 originalLab_pauli <- RGBtoLab(originalRGB_pauli)

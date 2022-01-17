@@ -213,11 +213,11 @@ Euclidean, and Canberra distances~\citep{BanchmarckSimiliraty}.
 \citet{AssessingInformationContentinColorImages} used the Kullback-Leibler divergence in their proposal.
 
 Consider the images $p(L, a, b)$ and $q(L, a, b)$.
-The Kullback-Leibler divergences between the $p$ and $q$ channels
+The Kullback-Leibler divergences between the proportions $p$ and $q$ of observations channels in the channels:
 \begin{align}
-D_{L}(p,q) & = \sum_{L} p(L) \log\frac{p(L)}{q(L)},\\
-D_{a}(p,q) & = \sum_{a} p(a) \log\frac{p(a)}{q(a)},\\
-D_{b}(p,q) & = \sum_{b} p(b) \log\frac{p(b)}{q(b)}.
+D_{L}(p,q) & = \sum_{L} p(L) \log\frac{p(L)}{q(L)},\label{eq:KLL}\\
+D_{a}(p,q) & = \sum_{a} p(a) \log\frac{p(a)}{q(a)},\label{eq:KLa}\\
+D_{b}(p,q) & = \sum_{b} p(b) \log\frac{p(b)}{q(b)}\label{eq:KLb}.
 \end{align}
 The authors then propose adding these components divergences to obtain a measure of the difference between the images.
 The Kullback-Leibler divergence is not necessary symmetric, and requires computing a ratio in which the denominator may be zero, and the logarithm of a quantity that may be zero.
@@ -225,17 +225,11 @@ The Kullback-Leibler divergence is not necessary symmetric, and requires computi
 The Hellinger distance is a widely used measure which does not have the problems metioned above.
 It is defined as
 \begin{equation}
-	H(p, q) = \frac{1}{2}\sqrt{\sum_{j=1}^k \big(\sqrt{p_j} - \sqrt{q_j}\big)^2}.
+	H(p, q) = \frac{1}{2}\sqrt{\sum_{j=1}^k \big(\sqrt{p_j} - \sqrt{q_j}\big)^2}
 \end{equation}
+for each component as in Eqs.~\eqref{eq:KLL}--\eqref{eq:KLb}.
 \citet{BanchmarckSimiliraty} computed the Hellinger distance along with other seven metrics, considering some factors such as complexity and the relationship with the amount of noise, and the Hellinger distance presented consistent and acceptable results.
 We used the Hellinger distance to computed the dissimilarity between the images and the ideal signal.
-
-
-
-
-
-
-
 
 \section{RESULTS}
 \label{Sec:Results}
@@ -246,6 +240,7 @@ the version with equalized bands (Fig.~\ref{Im:Equalized} and~\ref{Im:ZoomEquali
 and the result of applying contrast improvement in the CIELab space (Figs.~\ref{Im:Enhanced} and~\ref{Im:ZoomImproved}).
 The differences are noticeable.
 While the three first have crisp and highly saturated colors, the last one is more realistic while preserving the hue.
+In particular, the image enhanced by decorrelation (Figs.~\ref{Im:Decorrelated} and~\ref{Im:ZoomDecorrelated}) produces colors which are not interpretable in terms of a Pauli decomposition.
 
 \begin{figure*}[hbt]
 \centering
