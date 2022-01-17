@@ -50,7 +50,7 @@ dc_stretch <- function(r){
   R0 <- solve(pc$loadings)
   
   # 'stretch' values in pc space, then transform back to RGB space
-  fun <- function(x){(x-min(x))/(max(x)-min(x))*255}
+  fun <- function(x){(x-min(x))/(max(x)-min(x))}
   scp  <- apply(predict(pc), 2, function(x) scale(ecdf(x)(x), scale = FALSE))
   scpt <- scp %*% R0
   r[] <- apply(scpt, 2, fun)
